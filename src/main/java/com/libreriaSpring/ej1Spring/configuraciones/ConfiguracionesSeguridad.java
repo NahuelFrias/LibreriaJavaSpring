@@ -1,13 +1,21 @@
 
 package com.libreriaSpring.ej1Spring.configuraciones;
 
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 /**
  *
  * @author leonahuel
  */
+@Configuration 
+@EnableWebSecurity 
+@EnableGlobalMethodSecurity(prePostEnabled=true) 
+@Order(1)
 public class ConfiguracionesSeguridad extends WebSecurityConfigurerAdapter {
     
      @Override
