@@ -1,12 +1,21 @@
 package com.libreriaSpring.ej1Spring.entidades;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class Autor {
     
     @Id
+    /*
+    Queremos que el valor de este ID se genere automaticamente
+    al momento de que el repositorio persista la entidad.
+    Esto genera una cadena de texto que nunca se repite
+    */
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
     private String nombre;
     private Boolean alta;
