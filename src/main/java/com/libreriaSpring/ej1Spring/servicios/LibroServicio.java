@@ -3,7 +3,9 @@ package com.libreriaSpring.ej1Spring.servicios;
 import com.libreriaSpring.ej1Spring.entidades.Libro;
 import com.libreriaSpring.ej1Spring.errores.ErrorServicio;
 import com.libreriaSpring.ej1Spring.repositorios.LibroRepositorio;
+import java.util.List;
 import java.util.Optional;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +14,17 @@ public class LibroServicio {
 
     @Autowired
     private LibroRepositorio libroRepositorio;
+    @Autowired
+    private AutorServicio as;
+    @Autowired
+    private EditorialServicio es;
 
-    public void registrarLibro(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados, Integer ejemplaresRestantes) throws ErrorServicio {
+    /*
+    Si el metodo se ejecuta correctamente se hace un commit a la base de datos
+    Si salta una excepcion se vuelve atras y no se realizan los cambios
+    */
+    @Transactional
+    public void registrarLibro(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados, Integer ejemplaresRestantes, String nombreAutor, String nombreEditorial) throws ErrorServicio {
 
         validar(isbn, titulo, anio, ejemplares, ejemplaresPrestados);
 
@@ -23,13 +34,16 @@ public class LibroServicio {
         libro.setEjemplaresPrestados(ejemplaresPrestados);
         libro.setIsbn(isbn);
         libro.setTitulo(titulo);
+        libro.setAutor(as.registrarAutor(nombreAutor));
+        libro.setEditorial(es.registrarEditorial(nombreEditorial));
         libro.setAlta(Boolean.TRUE);
-        //debo setear Autor y Editorial!!!
 
         libroRepositorio.save(libro);
     }
 
-    public void modificarLibro(String id, Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados, Integer ejemplaresRestantes) throws ErrorServicio {
+    @Transactional
+    public void modificarLibro(String id, Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados, Integer ejemplaresRestantes, 
+            String nombreAutor, String nombreEditorial, String idAutor, String idEditorial) throws ErrorServicio {
 
         validar(isbn, titulo, anio, ejemplares, ejemplaresPrestados);
 
@@ -42,11 +56,30 @@ public class LibroServicio {
             libro.setEjemplaresPrestados(ejemplaresPrestados);
             libro.setIsbn(isbn);
             libro.setTitulo(titulo);
+            libro.setAutor(as.modificarAutor(idAutor, nombreAutor));
+            libro.setEditorial(es.modificarEditorial(idEditorial, nombreEditorial));
         } else {
             throw new ErrorServicio("No se encontro el libro.");
         }
     }
     
+    public List<Libro> listarLibros(){
+        return libroRepositorio.listarLibros();
+    }
+    
+    public List<Libro> buscarLibroPorTitulo(String titulo){
+        return libroRepositorio.buscarLibroPorTitulo(titulo);
+    }
+    
+    public List<Libro> buscarLibroPorEditorial(String editorial){
+        return libroRepositorio.buscarLibroPorEditorial(editorial);
+    }
+    
+    public List<Libro> buscarLibroPorAutor(String autor){
+        return libroRepositorio.buscarLibroPorAutor(autor);
+    }
+    
+    @Transactional
     public void eliminarLibro(String id) throws ErrorServicio{
         
         Optional<Libro> respuesta = libroRepositorio.findById(id);

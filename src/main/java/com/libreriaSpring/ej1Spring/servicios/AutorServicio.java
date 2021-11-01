@@ -3,7 +3,9 @@ package com.libreriaSpring.ej1Spring.servicios;
 import com.libreriaSpring.ej1Spring.entidades.Autor;
 import com.libreriaSpring.ej1Spring.errores.ErrorServicio;
 import com.libreriaSpring.ej1Spring.repositorios.AutorRepositorio;
+import java.util.List;
 import java.util.Optional;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +17,12 @@ public class AutorServicio {
     //ya que con autowired lo incializa el servidor de aplicaciones
     private AutorRepositorio autorRepositorio;
 
-    public void registrarAutor(String nombre) throws ErrorServicio {
+    /*
+    Si el metodo se ejecuta correctamente se hace un commit a la base de datos
+    Si salta una excepcion se vuelve atras y no se realizan los cambios
+     */
+    @Transactional
+    public Autor registrarAutor(String nombre) throws ErrorServicio {
 
         //el id se generaba automaticamente
         //si se dispara algun error de servicio no se crea la entidad!
@@ -28,9 +35,12 @@ public class AutorServicio {
 
         //el repositorio almacena el objeto
         autorRepositorio.save(autor);
+
+        return autor;
     }
 
-    public void modificarAutor(String id, String nombre) throws ErrorServicio {
+    @Transactional
+    public Autor modificarAutor(String id, String nombre) throws ErrorServicio {
 
         //validamos si los datos son correctos
         validar(nombre);
@@ -43,14 +53,17 @@ public class AutorServicio {
             autor.setNombre(nombre);
             //actualizamos
             autorRepositorio.save(autor);
+            return autor;
         } else {
             throw new ErrorServicio("No se encontro el autor.");
+
         }
     }
-    
-    public void eliminarAutor(String id) throws ErrorServicio{
-        
-         Optional<Autor> respuesta = autorRepositorio.findById(id);
+
+    @Transactional
+    public void eliminarAutor(String id) throws ErrorServicio {
+
+        Optional<Autor> respuesta = autorRepositorio.findById(id);
 
         if (respuesta.isPresent()) {
             Autor autor = respuesta.get();
@@ -60,7 +73,14 @@ public class AutorServicio {
         } else {
             throw new ErrorServicio("No se encontro el autor.");
         }
-        
+    }
+
+    public List<Autor> listarAutores() {
+        return autorRepositorio.listarAutores();
+    }
+
+    public List<Autor> buscarAutorPorNombre(String nombre) {
+        return autorRepositorio.buscarAutorPorNombre(nombre);
     }
 
     public void validar(String nombre) throws ErrorServicio {
