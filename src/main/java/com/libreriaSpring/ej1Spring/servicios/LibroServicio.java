@@ -64,7 +64,22 @@ public class LibroServicio {
     }
     
     public List<Libro> listarLibros(){
-        return libroRepositorio.listarLibros();
+        return libroRepositorio.findAll();
+    }
+    
+    /*
+    Se puede hacer de esta manera
+    o con lenguaje sql en el repositorio
+    */
+    public Libro buscarPorId( String id) throws ErrorServicio{
+        Optional<Libro> respuesta = libroRepositorio.findById(id);
+        
+        if(respuesta.isPresent()){
+            Libro libro = respuesta.get();
+            return libro;
+        }else{
+            throw new ErrorServicio("No se encontro el libro.");
+        }
     }
     
     public List<Libro> buscarLibroPorTitulo(String titulo){

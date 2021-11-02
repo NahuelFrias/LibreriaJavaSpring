@@ -28,15 +28,22 @@ public class AutorServicio {
         //si se dispara algun error de servicio no se crea la entidad!
         validar(nombre);
 
-        Autor autor = new Autor();
-        autor.setNombre(nombre);
-        //consultar!!
-        autor.setAlta(Boolean.TRUE);
+        Autor a = (Autor) autorRepositorio.buscarAutorPorNombre(nombre);
 
-        //el repositorio almacena el objeto
-        autorRepositorio.save(autor);
+        if (a != null) {
+            return a;
+        } else {
 
-        return autor;
+            Autor autor = new Autor();
+            autor.setNombre(nombre);
+            //consultar!!
+            autor.setAlta(Boolean.TRUE);
+
+            //el repositorio almacena el objeto
+            autorRepositorio.save(autor);
+
+            return autor;
+        }
     }
 
     @Transactional

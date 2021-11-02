@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EditorialServicio {
-    
+
     @Autowired
     //no hace falta inicializar esta variable
     //ya que con autowired lo incializa el servidor de aplicaciones
@@ -20,7 +20,7 @@ public class EditorialServicio {
     /*
     Si el metodo se ejecuta correctamente se hace un commit a la base de datos
     Si salta una excepcion se vuelve atras y no se realizan los cambios
-    */
+     */
     @Transactional
     public Editorial registrarEditorial(String nombre) throws ErrorServicio {
 
@@ -28,15 +28,22 @@ public class EditorialServicio {
         //si se dispara algun error de servicio no se crea la entidad!
         validar(nombre);
 
-        Editorial editorial= new Editorial();
-        editorial.setNombre(nombre);
-        //consultar!!
-        editorial.setAlta(true);
+        Editorial e = (Editorial) editorialRepositorio.buscarEditorialPorNombre(nombre);
 
-        //el repositorio almacena el objeto
-        editorialRepositorio.save(editorial);
-        
-        return editorial;
+        if (e != null) {
+            return e;
+        } else {
+
+            Editorial editorial = new Editorial();
+            editorial.setNombre(nombre);
+            //consultar!!
+            editorial.setAlta(true);
+
+            //el repositorio almacena el objeto
+            editorialRepositorio.save(editorial);
+
+            return editorial;
+        }
     }
 
     @Transactional
@@ -49,7 +56,7 @@ public class EditorialServicio {
         Optional<Editorial> respuesta = editorialRepositorio.findById(id);
 
         if (respuesta.isPresent()) {
-            Editorial editorial= respuesta.get();
+            Editorial editorial = respuesta.get();
             editorial.setNombre(nombre);
             //actualizamos
             editorialRepositorio.save(editorial);
@@ -58,19 +65,19 @@ public class EditorialServicio {
             throw new ErrorServicio("No se encontro la editorial.");
         }
     }
-    
-    public List<Editorial> listarLibros(){
+
+    public List<Editorial> listarLibros() {
         return editorialRepositorio.listarEditoriales();
     }
-    
-    public List<Editorial> buscarEditorialPorNombre(String nombre){
+
+    public List<Editorial> buscarEditorialPorNombre(String nombre) {
         return editorialRepositorio.buscarEditorialPorNombre(nombre);
     }
-    
+
     @Transactional
-    public void eliminarEditorial(String id) throws ErrorServicio{
-        
-         Optional<Editorial> respuesta = editorialRepositorio.findById(id);
+    public void eliminarEditorial(String id) throws ErrorServicio {
+
+        Optional<Editorial> respuesta = editorialRepositorio.findById(id);
 
         if (respuesta.isPresent()) {
             Editorial editorial = respuesta.get();
@@ -80,7 +87,7 @@ public class EditorialServicio {
         } else {
             throw new ErrorServicio("No se encontro la editorial.");
         }
-        
+
     }
 
     public void validar(String nombre) throws ErrorServicio {
@@ -90,5 +97,5 @@ public class EditorialServicio {
         }
 
     }
-    
+
 }

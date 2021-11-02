@@ -1,5 +1,6 @@
 package com.libreriaSpring.ej1Spring.entidades;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -26,10 +27,11 @@ public class Libro {
     private Integer ejemplaresRestantes;
     private Boolean alta;
     
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    //esto es para que cree las tablas en cascada, tanto autor como editorial
     private Autor autor;
     
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Editorial editorial;
 
     /**

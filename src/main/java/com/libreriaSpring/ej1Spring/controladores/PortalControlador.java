@@ -20,9 +20,44 @@ public class PortalControlador {
         return "index.html";
     }
     
+    @GetMapping("/cargas")
+    public String cargas() {
+        return "cargas.html";
+    }
+    
+    @GetMapping("/listas")
+    public String listas() {
+        return "listas.html";
+    }
+    
+    @GetMapping("/cargarLibro")
+    public String cargarLibro() {
+        return "cargarLibro.html";
+    }
+    
+    @GetMapping("/cargarAutor")
+    public String cargarAutor() {
+        return "cargarAutor.html";
+    }
+    
+    @GetMapping("/cargarEditorial")
+    public String cargarEditorial() {
+        return "cargarEditorial.html";
+    }
+    
     @GetMapping("/listaAutores")
     public String listaAutores() {
         return "listaAutores.html";
+    }
+    
+    @GetMapping("/listaEditoriales")
+    public String listaEditoriales() {
+        return "listaEditoriales.html";
+    }
+    
+    @GetMapping("/listaLibros")
+    public String listaLibros() {
+        return "listaLibros.html";
     }
     
 }
