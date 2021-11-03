@@ -28,7 +28,7 @@ public class AutorServicio {
         //si se dispara algun error de servicio no se crea la entidad!
         validar(nombre);
 
-        Autor a = (Autor) autorRepositorio.buscarAutorPorNombre(nombre);
+        Autor a = buscarAutorPorNombre(nombre);
 
         if (a != null) {
             return a;
@@ -86,7 +86,7 @@ public class AutorServicio {
         return autorRepositorio.listarAutores();
     }
 
-    public List<Autor> buscarAutorPorNombre(String nombre) {
+    public Autor buscarAutorPorNombre(String nombre) {
         return autorRepositorio.buscarAutorPorNombre(nombre);
     }
 

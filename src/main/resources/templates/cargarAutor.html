@@ -39,19 +39,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
     <div>
         <div class="mb-3">
-            <label for="formGroupExampleInput" class="form-label">Nombre</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Nombre del Autor">
-        </div>
-        <div class="mb-3">
-            <label for="formGroupExampleInput2" class="form-label">Another label</label>
-            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input placeholder">
+            <form action="/registrandoAutor" method="post">
+                <label for="formGroupExampleInput" class="form-label">Nombre</label>
+                <input type="text" class="form-control" name="nombre" placeholder="Nombre del Autor">
         </div>
 
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a href="/cargas"<button class="btn btn-primary me-md-2" type="button">Volver</button></a>
-            <button class="btn btn-primary" type="button">Cargar</button>
+            <a href="/cargas" <button class="btn btn-primary me-md-2" type="button">Volver</button></a>
+            <button class="btn btn-primary" type="submit">Cargar</button>
+            </form>
         </div>
-
     </div>
 
 

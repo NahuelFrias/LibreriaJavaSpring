@@ -1,5 +1,7 @@
 package com.libreriaSpring.ej1Spring.servicios;
 
+import com.libreriaSpring.ej1Spring.entidades.Autor;
+import com.libreriaSpring.ej1Spring.entidades.Editorial;
 import com.libreriaSpring.ej1Spring.entidades.Libro;
 import com.libreriaSpring.ej1Spring.errores.ErrorServicio;
 import com.libreriaSpring.ej1Spring.repositorios.LibroRepositorio;
@@ -24,7 +26,7 @@ public class LibroServicio {
     Si salta una excepcion se vuelve atras y no se realizan los cambios
     */
     @Transactional
-    public void registrarLibro(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados, Integer ejemplaresRestantes, String nombreAutor, String nombreEditorial) throws ErrorServicio {
+    public void registrarLibro(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados, Autor autor, Editorial editorial) throws ErrorServicio {
 
         validar(isbn, titulo, anio, ejemplares, ejemplaresPrestados);
 
@@ -34,16 +36,16 @@ public class LibroServicio {
         libro.setEjemplaresPrestados(ejemplaresPrestados);
         libro.setIsbn(isbn);
         libro.setTitulo(titulo);
-        libro.setAutor(as.registrarAutor(nombreAutor));
-        libro.setEditorial(es.registrarEditorial(nombreEditorial));
+        libro.setAutor(as.registrarAutor(autor.getNombre()));
+        libro.setEditorial(es.registrarEditorial(editorial.getNombre()));
         libro.setAlta(Boolean.TRUE);
 
         libroRepositorio.save(libro);
     }
 
     @Transactional
-    public void modificarLibro(String id, Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados, Integer ejemplaresRestantes, 
-            String nombreAutor, String nombreEditorial, String idAutor, String idEditorial) throws ErrorServicio {
+    public void modificarLibro(String id, Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados,
+            Autor autor, Editorial editorial, String idAutor, String idEditorial) throws ErrorServicio {
 
         validar(isbn, titulo, anio, ejemplares, ejemplaresPrestados);
 
@@ -56,8 +58,8 @@ public class LibroServicio {
             libro.setEjemplaresPrestados(ejemplaresPrestados);
             libro.setIsbn(isbn);
             libro.setTitulo(titulo);
-            libro.setAutor(as.modificarAutor(idAutor, nombreAutor));
-            libro.setEditorial(es.modificarEditorial(idEditorial, nombreEditorial));
+            libro.setAutor(as.modificarAutor(idAutor, autor.getNombre()));
+            libro.setEditorial(es.modificarEditorial(idEditorial, editorial.getNombre()));
         } else {
             throw new ErrorServicio("No se encontro el libro.");
         }
@@ -110,11 +112,12 @@ public class LibroServicio {
 
     public void validar(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados) throws ErrorServicio {
 
-        if (titulo == null || titulo.isEmpty()) {
-            throw new ErrorServicio("El titulo no puede ser nulo.");
-        }
+        
         if (isbn == null) {
             throw new ErrorServicio("El isbn no puede ser nulo.");
+        }
+        if (titulo == null || titulo.isEmpty()) {
+            throw new ErrorServicio("El titulo no puede ser nulo.");
         }
         if (anio == null) {
             throw new ErrorServicio("El año no puede ser nulo.");

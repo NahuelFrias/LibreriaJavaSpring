@@ -1,5 +1,6 @@
 package com.libreriaSpring.ej1Spring.entidades;
 
+import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,7 +9,7 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-public class Libro {
+public class Libro implements Serializable {
     
     @Id
     /*
@@ -24,7 +25,7 @@ public class Libro {
     private Integer anio;
     private Integer ejemplares;
     private Integer ejemplaresPrestados;
-    private Integer ejemplaresRestantes;
+    //private Integer ejemplaresRestantes;
     private Boolean alta;
     
     @ManyToOne(cascade = CascadeType.ALL)
@@ -121,16 +122,16 @@ public class Libro {
     /**
      * @return the ejemplaresRestantes
      */
-    public Integer getEjemplaresRestantes() {
+    /*public Integer getEjemplaresRestantes() {
         return ejemplaresRestantes;
-    }
+    }*/
 
     /**
      * @param ejemplaresRestantes the ejemplaresRestantes to set
      */
-    public void setEjemplaresRestantes(Integer ejemplaresRestantes) {
+    /*public void setEjemplaresRestantes(Integer ejemplaresRestantes) {
         this.ejemplaresRestantes = ejemplaresRestantes;
-    }
+    }*/
 
     /**
      * @return the alta

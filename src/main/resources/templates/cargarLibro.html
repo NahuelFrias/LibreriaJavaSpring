@@ -3,7 +3,7 @@
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
 Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
 -->
-<html>
+<html lang="en" xmlns="http://www.thymeleaf.org">
 
 <head>
 
@@ -39,31 +39,42 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
     <div>
         <div class="mb-3">
+            <form action="/registrandoLibro" method="post">
+
+            <p th:if="${error != null}" th:text= "${error}" style="color:red;"></p>
+
             <label for="formGroupExampleInput" class="form-label">ISBN</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Isbn del libro">
+            <input type="text" class="form-control" name="isbn" placeholder="Isbn del libro" th:value="${isbn}">
         </div>
         <div class="mb-3">
             <label for="formGroupExampleInput" class="form-label">Titulo</label>
-            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Titulo del Libro">
+            <input type="text" class="form-control" name="titulo" placeholder="Titulo del Libro" th:value="${titulo}">
         </div>
-
-
         <div class="mb-3">
             <label for="formGroupExampleInput" class="form-label">Año</label>
-            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Año del Libro">
+            <input type="text" class="form-control" name="anio" placeholder="Año del Libro" th:value="${anio}">
+        </div>
+        <div class="mb-3">
+            <label for="formGroupExampleInput" class="form-label">Autor</label>
+            <input type="text" class="form-control" name="autor" placeholder="Autor del Libro" th:value="${autor}">
+        </div>
+        <div class="mb-3">
+            <label for="formGroupExampleInput" class="form-label">Editorial</label>
+            <input type="text" class="form-control" name="editorial" placeholder="Editorial del Libro" th:value="${editorial}">
         </div>
         <div class="mb-3">
             <label for="formGroupExampleInput" class="form-label">Ejemplares</label>
-            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Cantidad de Libros">
+            <input type="text" class="form-control" name="ejemplares" placeholder="Cantidad de Libros" th:value="${ejemplares}">
         </div>
         <div class="mb-3">
             <label for="formGroupExampleInput" class="form-label">Ejemplares Prestados</label>
-            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Cantidad de Libros prestados">
+            <input type="text" class="form-control" name="prestados" placeholder="Cantidad de Libros prestados" th:value="${prestados}">
         </div>
 
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a href="/cargas"<button class="btn btn-primary me-md-2" type="button">Volver</button></a>
-            <button class="btn btn-primary" type="button">Cargar</button>
+            <a href="/cargas" <button class="btn btn-primary me-md-2" type="button">Volver</button></a>
+            <button class="btn btn-primary" type="submit">Cargar</button>
+            </form>
         </div>
 
     </div>

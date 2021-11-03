@@ -28,7 +28,7 @@ public class EditorialServicio {
         //si se dispara algun error de servicio no se crea la entidad!
         validar(nombre);
 
-        Editorial e = (Editorial) editorialRepositorio.buscarEditorialPorNombre(nombre);
+        Editorial e = buscarEditorialPorNombre(nombre);
 
         if (e != null) {
             return e;
@@ -70,7 +70,7 @@ public class EditorialServicio {
         return editorialRepositorio.listarEditoriales();
     }
 
-    public List<Editorial> buscarEditorialPorNombre(String nombre) {
+    public Editorial buscarEditorialPorNombre(String nombre) {
         return editorialRepositorio.buscarEditorialPorNombre(nombre);
     }
 
