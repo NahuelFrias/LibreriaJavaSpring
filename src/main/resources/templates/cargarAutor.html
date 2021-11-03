@@ -40,8 +40,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     <div>
         <div class="mb-3">
             <form action="/registrandoAutor" method="post">
-                <label for="formGroupExampleInput" class="form-label">Nombre</label>
-                <input type="text" class="form-control" name="nombre" placeholder="Nombre del Autor">
+
+            <p th:if="${error != null}" th:text= "${error}" style="color:red;"></p>
+            <label for="formGroupExampleInput" class="form-label">Nombre</label>
+            <input type="text" class="form-control" name="nombre" placeholder="Nombre del Autor" th:value="${nombre}">
         </div>
 
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">

@@ -40,14 +40,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     <div>
         <div class="mb-3">
             <form action="/registrandoEditorial" method="post">
-            <label for="formGroupExampleInput" class="form-label">Nombre</label>
-            <input type="text" class="form-control" name="nombre" placeholder="Nombre de la Editorial">
+                <p th:if="${error != null}" th:text="${error}" style="color:red;"></p>
+
+                <label for="formGroupExampleInput" class="form-label">Nombre</label>
+                <input type="text" class="form-control" name="nombre" placeholder="Nombre de la Editorial"
+                    th:value="${nombre}">
         </div>
 
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a href="/cargas"<button class="btn btn-primary me-md-2" type="button">Volver</button></a>
+            <a href="/cargas" <button class="btn btn-primary me-md-2" type="button">Volver</button></a>
             <button class="btn btn-primary" type="submit">Cargar</button>
-        </form>
+            </form>
         </div>
 
     </div>

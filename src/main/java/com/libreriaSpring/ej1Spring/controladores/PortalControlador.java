@@ -23,53 +23,53 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller("")
 @RequestMapping("/")
- /*url que escucha este controlador!
+/*url que escucha este controlador!
 cuando entra a la barra de mi servidor ejecuta todos estos metodos
 y renderiza el html*/
 public class PortalControlador {
-    
+
     @Autowired
     private LibroServicio libroServicio;
-    
+
     @Autowired
     private AutorServicio autorServicio;
-    
+
     @Autowired
     private EditorialServicio editorialServicio;
-    
+
     @GetMapping("/")
     public String index() {
         return "index.html";
     }
-    
+
     @GetMapping("/cargas")
     public String cargas() {
         return "cargas.html";
     }
-    
+
     @GetMapping("/listas")
     public String listas() {
         return "listas.html";
     }
-    
+
     @GetMapping("/cargarLibro")
     public String cargarLibro() {
         return "cargarLibro.html";
     }
-    
+
     @GetMapping("/cargarAutor")
     public String cargarAutor() {
         return "cargarAutor.html";
     }
-    
+
     @GetMapping("/cargarEditorial")
     public String cargarEditorial() {
         return "cargarEditorial.html";
     }
-    
+
     @PostMapping("/registrandoLibro")
     //ModelMap sirve para insertar toda la info que vamos a mostrar en las interfaces de usuario o pantalla
-    public String registrandoLibro (ModelMap modelo, @RequestParam @Nullable Long isbn,
+    public String registrandoLibro(ModelMap modelo, @RequestParam @Nullable Long isbn,
             @RequestParam @Nullable String titulo,
             @RequestParam @Nullable Integer anio,
             @RequestParam @Nullable Integer ejemplares,
@@ -91,46 +91,52 @@ public class PortalControlador {
             modelo.put("editorial", editorial);
             return "cargarLibro.html";
         }
-        return "index.html";
+        modelo.put("titulo", "Registro de Libros");
+        modelo.put("descripcion", "El Libro fue registrado con exito!");
+        return "exito.html";
     }
-    
+
     @PostMapping("/registrandoAutor")
-    public String registrandoAutor (ModelMap modelo, @RequestParam String nombre) {
+    public String registrandoAutor(ModelMap modelo, @RequestParam String nombre) {
         try {
             autorServicio.registrarAutor(nombre);
         } catch (ErrorServicio ex) {
-            Logger.getLogger(PortalControlador.class.getName()).log(Level.SEVERE, null, ex);
+            modelo.put("error", ex.getMessage());
+            modelo.put("nombre", nombre);
             return "cargarAutor.html";
         }
         modelo.put("titulo", "Registro de Autores");
         modelo.put("descripcion", "El Autor fue registrado con exito!");
-        return "exitoAutor.html";
+        return "exito.html";
     }
-    
+
     @PostMapping("/registrandoEditorial")
-    public String registrandoEditorial (@RequestParam String nombre) {
+    public String registrandoEditorial(ModelMap modelo, @RequestParam String nombre) {
         try {
             editorialServicio.registrarEditorial(nombre);
         } catch (ErrorServicio ex) {
-            Logger.getLogger(PortalControlador.class.getName()).log(Level.SEVERE, null, ex);
+            modelo.put("error", ex.getMessage());
+            modelo.put("nombre", nombre);
             return "cargarEditorial.html";
         }
-        return "index.html";
+        modelo.put("titulo", "Registro de Editoriales");
+        modelo.put("descripcion", "La Editorial fue registrada con exito!");
+        return "exito.html";
     }
-    
+
     @GetMapping("/listaAutores")
     public String listaAutores() {
         return "listaAutores.html";
     }
-    
+
     @GetMapping("/listaEditoriales")
     public String listaEditoriales() {
         return "listaEditoriales.html";
     }
-    
+
     @GetMapping("/listaLibros")
     public String listaLibros() {
         return "listaLibros.html";
     }
-    
+
 }
