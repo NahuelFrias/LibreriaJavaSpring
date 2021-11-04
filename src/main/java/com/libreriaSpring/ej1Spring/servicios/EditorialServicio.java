@@ -66,8 +66,19 @@ public class EditorialServicio {
         }
     }
 
-    public List<Editorial> listarLibros() {
+    public List<Editorial> listarEditoriales() {
         return editorialRepositorio.listarEditoriales();
+    }
+    
+     public Editorial buscarPorId( String id) throws ErrorServicio{
+        Optional<Editorial> respuesta = editorialRepositorio.findById(id);
+        
+        if(respuesta.isPresent()){
+            Editorial editorial = respuesta.get();
+            return editorial;
+        }else{
+            throw new ErrorServicio("No se encontro la Editorial.");
+        }
     }
 
     public Editorial buscarEditorialPorNombre(String nombre) {

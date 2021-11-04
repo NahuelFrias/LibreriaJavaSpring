@@ -26,9 +26,12 @@ public class LibroServicio {
     Si salta una excepcion se vuelve atras y no se realizan los cambios
     */
     @Transactional
-    public void registrarLibro(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados, Autor autor, Editorial editorial) throws ErrorServicio {
+    public void registrarLibro(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados, String idAutor, String idEditorial) throws ErrorServicio {
 
-        validar(isbn, titulo, anio, ejemplares, ejemplaresPrestados);
+        Autor autor = as.buscarPorId(idAutor);
+        Editorial editorial = es.buscarPorId(idEditorial);
+        
+        validar(isbn, titulo, anio, ejemplares, ejemplaresPrestados, autor, editorial);
 
         Libro libro = new Libro();
         libro.setAnio(anio);
@@ -47,7 +50,7 @@ public class LibroServicio {
     public void modificarLibro(String id, Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados,
             Autor autor, Editorial editorial, String idAutor, String idEditorial) throws ErrorServicio {
 
-        validar(isbn, titulo, anio, ejemplares, ejemplaresPrestados);
+        validar(isbn, titulo, anio, ejemplares, ejemplaresPrestados,autor,editorial);
 
         Optional<Libro> respuesta = libroRepositorio.findById(id);
 
@@ -58,6 +61,9 @@ public class LibroServicio {
             libro.setEjemplaresPrestados(ejemplaresPrestados);
             libro.setIsbn(isbn);
             libro.setTitulo(titulo);
+            /*
+            Tal vez sea mejor con registrar autor que con modificar autor
+            */
             libro.setAutor(as.modificarAutor(idAutor, autor.getNombre()));
             libro.setEditorial(es.modificarEditorial(idEditorial, editorial.getNombre()));
         } else {
@@ -110,7 +116,7 @@ public class LibroServicio {
         }
     }
 
-    public void validar(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados) throws ErrorServicio {
+    public void validar(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados, Autor autor, Editorial editorial) throws ErrorServicio {
 
         
         if (isbn == null) {
@@ -121,6 +127,12 @@ public class LibroServicio {
         }
         if (anio == null) {
             throw new ErrorServicio("El año no puede ser nulo.");
+        }
+        if(autor == null){
+            throw new ErrorServicio("El autor no puede ser nulo.");
+        }
+        if(editorial == null){
+            throw new ErrorServicio("La editorial no puede ser nula.");
         }
         if (ejemplares == null) {
             throw new ErrorServicio("La cantidad de ejemplares no puede ser nula.");

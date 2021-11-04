@@ -41,10 +41,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <div class="mb-3">
             <form action="/registrandoLibro" method="post">
 
-            <p th:if="${error != null}" th:text= "${error}" style="color:red;"></p>
+                <p th:if="${error != null}" th:text="${error}" style="color:red;"></p>
 
-            <label for="formGroupExampleInput" class="form-label">ISBN</label>
-            <input type="text" class="form-control" name="isbn" placeholder="Isbn del libro" th:value="${isbn}">
+                <label for="formGroupExampleInput" class="form-label">ISBN</label>
+                <input type="text" class="form-control" name="isbn" placeholder="Isbn del libro" th:value="${isbn}">
         </div>
         <div class="mb-3">
             <label for="formGroupExampleInput" class="form-label">Titulo</label>
@@ -54,21 +54,34 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <label for="formGroupExampleInput" class="form-label">Año</label>
             <input type="text" class="form-control" name="anio" placeholder="Año del Libro" th:value="${anio}">
         </div>
-        <div class="mb-3">
-            <label for="formGroupExampleInput" class="form-label">Autor</label>
-            <input type="text" class="form-control" name="autor" placeholder="Autor del Libro" th:value="${autor}">
+
+        <div class="form-floating">
+            <label for="formGroupExampleInput" class="form-label">Autor</label><br>
+            <select class="form-select" id="floatingSelect" name="idAutor" aria-label="Floating label select example">
+                <option selected>Selecciona un Autor</option>
+                <option th:each="autor : ${autores}" th:value="${autor.id}" th:text="${autor.nombre}"></option>
+            </select>
+            <p class="text-muted"><label for="floatingSelect">*Si no encuentras el Autor ve a la pestaña de carga de Autor</label></p>
         </div>
-        <div class="mb-3">
-            <label for="formGroupExampleInput" class="form-label">Editorial</label>
-            <input type="text" class="form-control" name="editorial" placeholder="Editorial del Libro" th:value="${editorial}">
+
+        <div class="form-floating">
+            <label for="formGroupExampleInput" class="form-label">Editorial</label><br>
+            <select class="form-select" id="floatingSelect" name="idEditorial" aria-label="Floating label select example">
+                <option selected>Selecciona una Editorial</option>
+                <option th:each="editorial : ${editoriales}" th:value="${editorial.id}" th:text="${editorial.nombre}"></option>
+            </select>
+            <p class="text-muted"><label for="floatingSelect">*Si no encuentras la Editorial ve a la pestaña de carga de Editorial</label></p>
         </div>
+
         <div class="mb-3">
             <label for="formGroupExampleInput" class="form-label">Ejemplares</label>
-            <input type="text" class="form-control" name="ejemplares" placeholder="Cantidad de Libros" th:value="${ejemplares}">
+            <input type="text" class="form-control" name="ejemplares" placeholder="Cantidad de Libros"
+                th:value="${ejemplares}">
         </div>
         <div class="mb-3">
             <label for="formGroupExampleInput" class="form-label">Ejemplares Prestados</label>
-            <input type="text" class="form-control" name="prestados" placeholder="Cantidad de Libros prestados" th:value="${prestados}">
+            <input type="text" class="form-control" name="prestados" placeholder="Cantidad de Libros prestados"
+                th:value="${prestados}">
         </div>
 
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
