@@ -3,7 +3,7 @@
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
 Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
 -->
-<html>
+<html lang="en" xmlns="http://www.thymeleaf.org">
 
 <head>
 
@@ -38,33 +38,26 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     </div>
 
     <div class="d-flex justify-content-center">
-        <table id="tabla" class="table table-dark table-striped">
-            <tr>
-                <th>Id</th>
-                <th>Nombre</th>
-                <th>Modificar</th>
-                <th>Eliminar</th>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td><a href="" <button type="button" class="btn btn-light">Modificar</button></a></td>
-                <td><a href="" <button type="button" class="btn btn-outline-danger">Eliminar</button></a></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td><a href="" <button type="button" class="btn btn-light">Modificar</button></a></td>
-                <td><a href="" <button type="button" class="btn btn-outline-danger">Eliminar</button></a></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td><a href="" <button type="button" class="btn btn-light">Modificar</button></a></td>
-                <td><a href="" <button type="button" class="btn btn-outline-danger">Eliminar</button></a></td>
-            </tr>
-        </table>
-    </div>
+            <table id="tabla" class="table table-dark table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Modificar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody th:each="editorial : ${editoriales}" >
+                    <tr>
+                        <th th:text="${editorial.id}"></th>
+                        <td th:text="${editorial. nombre}"></td>
+                        <td><a href="" <button type="button" class="btn btn-light">Modificar</button></a></td>
+                        <td><a href="" <button type="button" class="btn btn-outline-danger">Eliminar</button></a></td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
         <a href="/listas"<button class="btn btn-primary me-md-2" type="button">Volver</button></a>
     </div>
