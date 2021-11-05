@@ -3,7 +3,7 @@
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
 Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
 -->
-<html>
+<html lang="en" xmlns="http://www.thymeleaf.org">
 
 <head>
 
@@ -39,7 +39,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
     <div>
         <div class="mb-3">
-            <form action="/registrandoAutor" method="post">
+            <form action="/autor/registrandoAutor" method="post">
 
             <p th:if="${error != null}" th:text= "${error}" style="color:red;"></p>
             <label for="formGroupExampleInput" class="form-label">Nombre</label>

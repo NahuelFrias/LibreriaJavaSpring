@@ -3,7 +3,7 @@
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
 Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
 -->
-<html>
+<html lang="en" xmlns="http://www.thymeleaf.org">
 
 <head>
 
@@ -29,7 +29,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     <div class="navbar-nav">
                         <a class="nav-link active" aria-current="page" href="/">Home</a>
                         <a class="nav-link" href="/cargas">Carga</a>
-                        <a class="nav-link" href="listas">Listas</a>
+                        <a class="nav-link" href="/listas">Listas</a>
 
                     </div>
                 </div>
@@ -39,7 +39,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
     <div>
         <div class="mb-3">
-            <form action="/registrandoEditorial" method="post">
+            <form action="/editorial/registrandoEditorial" method="post">
                 <p th:if="${error != null}" th:text="${error}" style="color:red;"></p>
 
                 <label for="formGroupExampleInput" class="form-label">Nombre</label>
