@@ -76,7 +76,11 @@ public class PortalControlador {
     }
 
     @PostMapping("/registrandoLibro")
-    //ModelMap sirve para insertar toda la info que vamos a mostrar en las interfaces de usuario o pantalla
+    /*ModelMap sirve para insertar toda la info que vamos a mostrar en las interfaces de usuario o pantalla
+cuando en tu controlador pones un @RequestParam y vos lo pones vacio, cuando va al controlador espera a recibir ese parametro,
+    y como es nulo no recibe nada,
+    eso lo podes evitar poniendo como lo puso Gustavo o usando dentro de @RequestParam(required = false)
+     */
     public String registrandoLibro(ModelMap modelo,
             @RequestParam @Nullable Long isbn,
             @RequestParam @Nullable String titulo,
@@ -139,7 +143,7 @@ public class PortalControlador {
     public String listaAutores(ModelMap modelo) {
         List<Autor> autores = autorServicio.listarAutores();
         modelo.put("autores", autores);
-        
+
         return "listaAutores.html";
     }
 
