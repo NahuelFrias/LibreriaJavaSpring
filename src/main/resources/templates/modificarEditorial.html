@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,7 +10,54 @@
     <title>Document</title>
 </head>
 <body>
-    
+        <div>
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="#">Navbar</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+                            aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                            <div class="navbar-nav">
+                                <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
+                                <a class="nav-link" th:href="@{/cargas}">Carga</a>
+                                <a class="nav-link" th:href="@{/listas}">Listas</a>
+        
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        
+            <div th:if="${exito}!=null" class="card text-white bg-success mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Exito</h5>
+                    <p class="card-text" th:text="${exito}"></p>
+                </div>
+            </div>
+            <div th:if="${error}!=null" class="card text-white bg-danger mb-3" >
+                <div class="card-body">
+                    <h5 class="card-title">Error</h5>
+                    <p class="card-text" th:text="${error}"></p>
+                </div>
+            </div>
+        
+            <div>
+                <div class="mb-3">
+                    <form th:action="@{/editorial/modificarEditorial/__${editorial.id}__}" method="post">
+                        <input hidden th:value="${id}" name="id">
+                        <label for="formGroupExampleInput" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" name="nombre" placeholder="Nombre de la Editorial" th:value="${editorial.nombre}">
+                </div>
+        
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <a th:href="@{/editorial/listaEditoriales}" <button class="btn btn-primary me-md-2" type="button">Volver</button></a>
+                    <button class="btn btn-primary" type="submit">Cargar</button>
+                    </form>
+                </div>
+            </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
                 integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"

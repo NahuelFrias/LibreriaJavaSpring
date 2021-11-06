@@ -71,7 +71,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         <i th:if="${libro.alta}" class="fa fa-circle text-success"></i>
                         <i th:unless="${libro.alta}" class="fa fa-circle" style="color:red;"></i>
                     </td>
-                    <td><a href="" <button type="button" class="btn btn-light">Modificar</button></a></td>
+                    <td><a th:href="@{/libro/modificarLibro/__${libro.id}__}" <button type="button" class="btn btn-light">Modificar</button></a></td>
                     <td><a href="" <button type="button" class="btn btn-outline-danger">Eliminar</button></a></td>
                 </tr>
             </tbody>

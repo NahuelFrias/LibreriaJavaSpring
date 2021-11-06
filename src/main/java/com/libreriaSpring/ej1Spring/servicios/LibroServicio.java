@@ -26,7 +26,8 @@ public class LibroServicio {
     Si salta una excepcion se vuelve atras y no se realizan los cambios
     */
     @Transactional
-    public void registrarLibro(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados, String idAutor, String idEditorial) throws ErrorServicio {
+    public void registrarLibro(Long isbn, String titulo, Integer anio, Integer ejemplares,
+            Integer ejemplaresPrestados, String idAutor, String idEditorial) throws ErrorServicio {
 
         Autor autor = as.buscarPorId(idAutor);
         Editorial editorial = es.buscarPorId(idEditorial);
@@ -116,8 +117,8 @@ public class LibroServicio {
         }
     }
 
-    public void validar(Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados, Autor autor, Editorial editorial) throws ErrorServicio {
-
+    public void validar(Long isbn, String titulo, Integer anio, Integer ejemplares,
+            Integer ejemplaresPrestados, Autor autor, Editorial editorial) throws ErrorServicio {
         
         if (isbn == null) {
             throw new ErrorServicio("El isbn no puede ser nulo.");
@@ -141,5 +142,4 @@ public class LibroServicio {
             throw new ErrorServicio("La cantidad de ejemplares prestados no puede ser nula.");
         }
     }
-
 }

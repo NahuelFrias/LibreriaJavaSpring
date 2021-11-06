@@ -13,6 +13,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -78,7 +79,6 @@ public class LibroControlador {
             modelo.put("error", "Falto algun dato.");
             return "cargarLibro.html";
         }
-
     }
 
     @GetMapping("/listaLibros")
@@ -86,6 +86,54 @@ public class LibroControlador {
         List<Libro> libros = libroServicio.listarLibros();
         modelo.put("libros", libros);
         return "listaLibros.html";
+    }
+    
+    @GetMapping("/modificarLibro/{id}")
+    public String modificar(ModelMap modelo, @PathVariable String id) throws ErrorServicio{
+        modelo.put("libro", libroServicio.buscarPorId(id));
+        List<Autor> autores = autorServicio.listarAutores();
+        modelo.put("autores", autores);
+        List<Editorial> editoriales = editorialServicio.listarEditoriales();
+        modelo.put("editoriales", editoriales);
+        return "modificarLibro";
+    }
+
+    @PostMapping("/modificarLibro/{id}")
+    public String modificar(ModelMap modelo,
+            @PathVariable String id,
+            @RequestParam @Nullable Long isbn,
+            @RequestParam @Nullable String titulo,
+            @RequestParam @Nullable Integer anio,
+            @RequestParam @Nullable Integer ejemplares,
+            @RequestParam @Nullable Integer prestados,
+            @RequestParam @Nullable Autor autor,
+            @RequestParam @Nullable Editorial editorial,
+            @RequestParam @Nullable String idAutor,
+            @RequestParam @Nullable String idEditorial) {
+        try {
+            libroServicio.modificarLibro(id, isbn, titulo, anio, ejemplares, prestados, autor, editorial, idAutor, idEditorial);
+            modelo.put("exito", "El Libro fue modificado con exito!");
+            List<Libro> libros = libroServicio.listarLibros();
+            modelo.put("libros", libros);
+            return "listaLibros.html";
+        } catch (ErrorServicio ex) {
+            //muestro los campos que si estaban llenos antes del error
+            modelo.put("isbn", isbn);
+            modelo.put("titulo", titulo);
+            modelo.put("año", anio);
+            modelo.put("ejemplares", ejemplares);
+            modelo.put("prestados", prestados);
+            List<Autor> autores = autorServicio.listarAutores();
+            modelo.put("autores", autores);
+            List<Editorial> editoriales = editorialServicio.listarEditoriales();
+            modelo.put("editoriales", editoriales);
+            //muestro el error
+            modelo.put("error", "Falto algun dato.");
+            List<Libro> libros = libroServicio.listarLibros();
+            modelo.put("libros", libros);
+            return "index.html";
+        }
+
     }
 
 }

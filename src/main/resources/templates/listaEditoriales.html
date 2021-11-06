@@ -60,8 +60,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         <i th:if="${editorial.alta}" class="fa fa-circle text-success"></i>
                         <i th:unless="${editorial.alta}" class="fa fa-circle" style="color:red;"></i>
                     </td>
-                    <td><a href="" <button type="button" class="btn btn-light">Modificar</button></a></td>
-                    <td><a href="" <button type="button" class="btn btn-outline-danger">Eliminar</button></a></td>
+                    <td><a th:href="@{/editorial/modificarEditorial/__${editorial.id}__}" <button type="button" class="btn btn-light">Modificar</button></a></td>
+                    <td><a href="#" <button type="button" class="btn btn-outline-danger">Alta/Baja</button></a></td>
                 </tr>
 
             </tbody>

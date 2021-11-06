@@ -51,7 +51,6 @@ public class AutorServicio {
 
         //validamos si los datos son correctos
         validar(nombre);
-
         //buscamos el usuario por id y lo devolvemos
         Optional<Autor> respuesta = autorRepositorio.findById(id);
 
@@ -63,7 +62,6 @@ public class AutorServicio {
             return autor;
         } else {
             throw new ErrorServicio("No se encontro el autor.");
-
         }
     }
 
