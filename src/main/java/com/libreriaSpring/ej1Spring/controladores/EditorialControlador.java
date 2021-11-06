@@ -32,14 +32,15 @@ public class EditorialControlador {
     public String registrandoEditorial(ModelMap modelo, @RequestParam String nombre) {
         try {
             editorialServicio.registrarEditorial(nombre);
+            modelo.put("exito", "La editorial fue registrada con exito!");
+            return "cargarEditorial.html";
         } catch (ErrorServicio ex) {
-            modelo.put("error", ex.getMessage());
+            //muestro el error
+            modelo.put("error", "Falto algun dato.");
             modelo.put("nombre", nombre);
             return "cargarEditorial.html";
         }
-        modelo.put("titulo", "Registro de Editoriales");
-        modelo.put("descripcion", "La Editorial fue registrada con exito!");
-        return "exito.html";
+        
     }
     
     @GetMapping("/listaEditoriales")

@@ -86,7 +86,7 @@ public class EditorialServicio {
     }
 
     @Transactional
-    public void eliminarEditorial(String id) throws ErrorServicio {
+    public void bajaEditorial(String id) throws ErrorServicio {
 
         Optional<Editorial> respuesta = editorialRepositorio.findById(id);
 

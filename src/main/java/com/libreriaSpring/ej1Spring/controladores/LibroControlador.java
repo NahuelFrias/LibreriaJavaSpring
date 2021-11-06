@@ -61,9 +61,9 @@ public class LibroControlador {
             @RequestParam @Nullable String idEditorial) {
         try {
             libroServicio.registrarLibro(isbn, titulo, anio, ejemplares, prestados, idAutor, idEditorial);
+            modelo.put("exito", "El Libro fue registrado con exito!");
+            return "cargarLibro.html";
         } catch (ErrorServicio ex) {
-            //muestro el error
-            modelo.put("error", ex.getMessage());
             //muestro los campos que si estaban llenos antes del error
             modelo.put("isbn", isbn);
             modelo.put("titulo", titulo);
@@ -74,11 +74,11 @@ public class LibroControlador {
             modelo.put("autores", autores);
             List<Editorial> editoriales = editorialServicio.listarEditoriales();
             modelo.put("editoriales", editoriales);
+            //muestro el error
+            modelo.put("error", "Falto algun dato.");
             return "cargarLibro.html";
         }
-        modelo.put("titulo", "Registro de Libros");
-        modelo.put("descripcion", "El Libro fue registrado con exito!");
-        return "exito.html";
+
     }
 
     @GetMapping("/listaLibros")

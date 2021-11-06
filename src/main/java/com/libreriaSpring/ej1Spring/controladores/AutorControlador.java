@@ -19,29 +19,30 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/autor")
 public class AutorControlador {
-    
+
     @Autowired
     private AutorServicio autorServicio;
-    
+
     @GetMapping("/cargarAutor")
     public String cargarAutor() {
         return "cargarAutor.html";
     }
-    
+
     @PostMapping("/registrandoAutor")
     public String registrandoAutor(ModelMap modelo, @RequestParam String nombre) {
         try {
             autorServicio.registrarAutor(nombre);
+            modelo.put("exito", "El Autor fue registrado con exito!");
+            return "cargarAutor.html";
+
         } catch (ErrorServicio ex) {
-            modelo.put("error", ex.getMessage());
+            modelo.put("error", "Falto algun dato.");
             modelo.put("nombre", nombre);
             return "cargarAutor.html";
         }
-        modelo.put("titulo", "Registro de Autores");
-        modelo.put("descripcion", "El Autor fue registrado con exito!");
-        return "exito.html";
+
     }
-    
+
     @GetMapping("/listaAutores")
     public String listaAutores(ModelMap modelo) {
         List<Autor> autores = autorServicio.listarAutores();
@@ -49,5 +50,5 @@ public class AutorControlador {
 
         return "listaAutores.html";
     }
-    
+
 }

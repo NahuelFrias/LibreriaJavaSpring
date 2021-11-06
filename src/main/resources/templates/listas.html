@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -23,16 +23,16 @@
                 <div class="navbar-nav">
                     <a class="nav-link active" aria-current="page" href="/">Home</a>
                     <a class="nav-link" href="/cargas">Carga</a>
-                    <a class="nav-link" href="listas">Listas</a>
+                    <a class="nav-link" href="/listas">Listas</a>
 
                 </div>
             </div>
         </div>
     </nav>
 
-    <a href="/listaLibros" <button type="button" class="btn btn-light">Lista de Libros</button></a>
-    <a href="/listaAutores" <button type="button" class="btn btn-light">Lista de Autores</button></a>
-    <a href="/listaEditoriales" <button type="button" class="btn btn-light">Lista de Editoriales</button></a>
+    <a th:href="@{/libro/listaLibros}" <button type="button" class="btn btn-light">Lista de Libros</button></a>
+    <a th:href="@{/autor/listaAutores}" <button type="button" class="btn btn-light">Lista de Autores</button></a>
+    <a th:href="@{/editorial/listaEditoriales}" <button type="button" class="btn btn-light">Lista de Editoriales</button></a>
 
 
 

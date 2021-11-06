@@ -27,9 +27,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav">
-                        <a class="nav-link active" aria-current="page" href="/">Home</a>
-                        <a class="nav-link" href="/cargas">Carga</a>
-                        <a class="nav-link" href="/listas">Listas</a>
+                        <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
+                        <a class="nav-link" th:href="@{/cargas}">Carga</a>
+                        <a class="nav-link" th:href="@{/listas}">Listas</a>
 
                     </div>
                 </div>
@@ -37,11 +37,22 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         </nav>
     </div>
 
+    <div th:if="${exito}!=null" class="card text-white bg-success mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Exito</h5>
+            <p class="card-text" th:text="${exito}"></p>
+        </div>
+    </div>
+    <div th:if="${error}!=null" class="card text-white bg-danger mb-3" >
+        <div class="card-body">
+            <h5 class="card-title">Error</h5>
+            <p class="card-text" th:text="${error}"></p>
+        </div>
+    </div>
+
     <div>
         <div class="mb-3">
-            <form action="/libro/registrandoLibro" method="post">
-
-                <p th:if="${error != null}" th:text="${error}" style="color:red;"></p>
+            <form th:action="@{/libro/registrandoLibro}" method="post">
 
                 <label for="formGroupExampleInput" class="form-label">ISBN</label>
                 <input type="text" class="form-control" name="isbn" placeholder="Isbn del libro" th:value="${isbn}">
@@ -61,16 +72,20 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 <option selected>Selecciona un Autor</option>
                 <option th:each="autor : ${autores}" th:value="${autor.id}" th:text="${autor.nombre}"></option>
             </select>
-            <p class="text-muted"><label for="floatingSelect">*Si no encuentras el Autor ve a la pestaña de carga de Autor</label></p>
+            <p class="text-muted"><label for="floatingSelect">*Si no encuentras el Autor ve a la pestaña de carga de
+                    Autor</label></p>
         </div>
 
         <div class="form-floating">
             <label for="formGroupExampleInput" class="form-label">Editorial</label><br>
-            <select class="form-select" id="floatingSelect" name="idEditorial" aria-label="Floating label select example">
+            <select class="form-select" id="floatingSelect" name="idEditorial"
+                aria-label="Floating label select example">
                 <option selected>Selecciona una Editorial</option>
-                <option th:each="editorial : ${editoriales}" th:value="${editorial.id}" th:text="${editorial.nombre}"></option>
+                <option th:each="editorial : ${editoriales}" th:value="${editorial.id}" th:text="${editorial.nombre}">
+                </option>
             </select>
-            <p class="text-muted"><label for="floatingSelect">*Si no encuentras la Editorial ve a la pestaña de carga de Editorial</label></p>
+            <p class="text-muted"><label for="floatingSelect">*Si no encuentras la Editorial ve a la pestaña de carga de
+                    Editorial</label></p>
         </div>
 
         <div class="mb-3">
@@ -85,7 +100,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         </div>
 
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a href="/cargas" <button class="btn btn-primary me-md-2" type="button">Volver</button></a>
+            <a th:href="@{/cargas}" <button class="btn btn-primary me-md-2" type="button">Volver</button></a>
             <button class="btn btn-primary" type="submit">Cargar</button>
             </form>
         </div>

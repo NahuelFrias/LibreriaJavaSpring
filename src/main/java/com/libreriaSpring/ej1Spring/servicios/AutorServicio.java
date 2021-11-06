@@ -68,7 +68,7 @@ public class AutorServicio {
     }
 
     @Transactional
-    public void eliminarAutor(String id) throws ErrorServicio {
+    public void bajaAutor(String id) throws ErrorServicio {
 
         Optional<Autor> respuesta = autorRepositorio.findById(id);
 
@@ -81,19 +81,17 @@ public class AutorServicio {
             throw new ErrorServicio("No se encontro el autor.");
         }
     }
-    
-    public Autor buscarPorId( String id) throws ErrorServicio{
+
+    public Autor buscarPorId(String id) throws ErrorServicio {
         Optional<Autor> respuesta = autorRepositorio.findById(id);
-        
-        if(respuesta.isPresent()){
+
+        if (respuesta.isPresent()) {
             Autor autor = respuesta.get();
             return autor;
-        }else{
+        } else {
             throw new ErrorServicio("No se encontro el Autor.");
         }
     }
-    
-    
 
     public List<Autor> listarAutores() {
         return autorRepositorio.listarAutores();

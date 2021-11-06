@@ -27,9 +27,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav">
-                        <a class="nav-link active" aria-current="page" href="/">Home</a>
-                        <a class="nav-link" href="/cargas">Carga</a>
-                        <a class="nav-link" href="/listas">Listas</a>
+                        <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
+                        <a class="nav-link" th:href="@{/cargas}">Carga</a>
+                        <a class="nav-link" th:href="@{/listas}">Listas</a>
 
                     </div>
                 </div>
@@ -37,18 +37,29 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         </nav>
     </div>
 
+    <div th:if="${exito}!=null" class="card text-white bg-success mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Exito</h5>
+            <p class="card-text" th:text="${exito}"></p>
+        </div>
+    </div>
+    <div th:if="${error}!=null" class="card text-white bg-danger mb-3" >
+        <div class="card-body">
+            <h5 class="card-title">Error</h5>
+            <p class="card-text" th:text="${error}"></p>
+        </div>
+    </div>
+
     <div>
         <div class="mb-3">
-            <form action="/editorial/registrandoEditorial" method="post">
-                <p th:if="${error != null}" th:text="${error}" style="color:red;"></p>
-
+            <form th:action="@{/editorial/registrandoEditorial}" method="post">
                 <label for="formGroupExampleInput" class="form-label">Nombre</label>
                 <input type="text" class="form-control" name="nombre" placeholder="Nombre de la Editorial"
                     th:value="${nombre}">
         </div>
 
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a href="/cargas" <button class="btn btn-primary me-md-2" type="button">Volver</button></a>
+            <a th:href="@{/cargas}" <button class="btn btn-primary me-md-2" type="button">Volver</button></a>
             <button class="btn btn-primary" type="submit">Cargar</button>
             </form>
         </div>

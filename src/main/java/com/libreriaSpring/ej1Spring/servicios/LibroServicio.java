@@ -103,7 +103,7 @@ public class LibroServicio {
     }
     
     @Transactional
-    public void eliminarLibro(String id) throws ErrorServicio{
+    public void bajaLibro(String id) throws ErrorServicio{
         
         Optional<Libro> respuesta = libroRepositorio.findById(id);
         
