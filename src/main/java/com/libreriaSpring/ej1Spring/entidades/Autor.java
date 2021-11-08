@@ -63,4 +63,8 @@ public class Autor implements Serializable{
         this.alta = alta;
         
     }
+
+    public void setAlta(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -47,7 +47,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     <th>Nombre y apellido</th>
                     <th>Activo</th>
                     <th>Modificar</th>
-                    <th>Eliminar</th>
+                    <th>Alta/Baja</th>
                 </tr>
             </thead>
             <tbody th:each="autor : ${autores}">
@@ -61,7 +61,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     </td>
                     <!--le paso el id para modificar-->
                     <td><a th:href="@{/autor/modificarAutor/__${autor.id}__}" <button type="button" class="btn btn-light">Modificar</button></a></td>
-                    <td><a href="#" <button type="button" class="btn btn-outline-danger">Alta/Baja</button></a></td>
+                    <td>
+                        <a th:if="${autor.alta}" th:href="@{/autor/bajaAutor/__${autor.id}__}" <button type="button" class="btn btn-outline-danger">Baja</button></a>
+                        <a th:unless="${autor.alta}" th:href="@{/autor/altaAutor/__${autor.id}__}" <button type="button" class="btn btn-outline-success">Alta</button></a>
+                    </td>
                 </tr>
             </tbody>
         </table>

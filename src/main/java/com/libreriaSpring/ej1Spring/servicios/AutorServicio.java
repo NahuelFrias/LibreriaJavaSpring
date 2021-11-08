@@ -66,18 +66,19 @@ public class AutorServicio {
     }
 
     @Transactional
-    public void bajaAutor(String id) throws ErrorServicio {
+    public Autor alta(String id) throws ErrorServicio {
 
-        Optional<Autor> respuesta = autorRepositorio.findById(id);
+        Autor autor = autorRepositorio.getOne(id);
+        autor.setAlta(true);
+        return autorRepositorio.save(autor);
+    }
+    
+    @Transactional
+    public Autor baja(String id) throws ErrorServicio {
 
-        if (respuesta.isPresent()) {
-            Autor autor = respuesta.get();
-            autor.setAlta(Boolean.FALSE);
-            //actualizamos
-            autorRepositorio.save(autor);
-        } else {
-            throw new ErrorServicio("No se encontro el autor.");
-        }
+        Autor autor = autorRepositorio.getOne(id);
+        autor.setAlta(false);
+        return autorRepositorio.save(autor);
     }
 
     public Autor buscarPorId(String id) throws ErrorServicio {

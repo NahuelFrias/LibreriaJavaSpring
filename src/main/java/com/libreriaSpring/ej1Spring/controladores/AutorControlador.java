@@ -81,6 +81,57 @@ public class AutorControlador {
             modelo.put("autores", autores);
             return "listaAutores.html";
         }
+    }
 
+    @GetMapping("/altaAutor/{id}")
+    public String alta(ModelMap modelo, @PathVariable String id) {
+        List<Autor> autores = autorServicio.listarAutores();
+        modelo.put("autores", autores);
+
+        return "listaAutores.html";
+
+    }
+
+    @PostMapping("/altaAutor/{id}")
+    public String altaAutor(ModelMap modelo, @PathVariable String id) {
+        try {
+            autorServicio.alta(id);
+            modelo.put("exito", "Modificacion exitosa");
+            List<Autor> autores = autorServicio.listarAutores();
+            modelo.put("autores", autores);
+            return "listaAutores.html";
+
+        } catch (ErrorServicio ex) {
+            modelo.put("error", "Falto algun dato");
+            List<Autor> autores = autorServicio.listarAutores();
+            modelo.put("autores", autores);
+            return "listaAutores.html";
+        }
+    }
+    
+    @GetMapping("/bajaAutor/{id}")
+    public String baja(ModelMap modelo) {
+        List<Autor> autores = autorServicio.listarAutores();
+        modelo.put("autores", autores);
+
+        return "listaAutores.html";
+
+    }
+
+    @PostMapping("/bajaAutor/{id}")
+    public String baja(ModelMap modelo, @PathVariable String id) {
+        try {
+            autorServicio.baja(id);
+            modelo.put("exito", "Modificacion exitosa");
+            List<Autor> autores = autorServicio.listarAutores();
+            modelo.put("autores", autores);
+            return "listaAutores.html";
+
+        } catch (ErrorServicio ex) {
+            modelo.put("error", "Falto algun dato");
+            List<Autor> autores = autorServicio.listarAutores();
+            modelo.put("autores", autores);
+            return "listaAutores.html";
+        }
     }
 }

@@ -83,7 +83,7 @@
                                 aria-label="Floating label select example">
                                 <option selected>Selecciona una Editorial</option>
                                 <option th:each="editorial : ${editoriales}" th:value="${libro.editorial.id}"
-                                        th:text="${libro.editorial.nombre}">
+                                        th:text="${editorial.nombre}">
                                 </option>
                         </select>
                         <p class="text-muted"><label for="floatingSelect">*Si no encuentras la Editorial ve a la pestaña
