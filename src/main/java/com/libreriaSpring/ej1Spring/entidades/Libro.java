@@ -174,5 +174,4 @@ public class Libro implements Serializable {
     public void setEditorial(Editorial editorial) {
         this.editorial = editorial;
     }
-    
 }
