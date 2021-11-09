@@ -67,16 +67,14 @@ public class AutorServicio {
 
     @Transactional
     public Autor alta(String id) throws ErrorServicio {
-
-        Autor autor = autorRepositorio.getOne(id);
+        Autor autor = autorRepositorio.getById(id);
         autor.setAlta(true);
         return autorRepositorio.save(autor);
     }
     
     @Transactional
     public Autor baja(String id) throws ErrorServicio {
-
-        Autor autor = autorRepositorio.getOne(id);
+        Autor autor = autorRepositorio.getById(id);
         autor.setAlta(false);
         return autorRepositorio.save(autor);
     }
@@ -93,7 +91,7 @@ public class AutorServicio {
     }
 
     public List<Autor> listarAutores() {
-        return autorRepositorio.listarAutores();
+        return autorRepositorio.findAll();
     }
 
     public Autor buscarAutorPorNombre(String nombre) {

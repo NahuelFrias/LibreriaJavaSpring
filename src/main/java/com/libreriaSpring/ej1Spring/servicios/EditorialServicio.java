@@ -67,7 +67,7 @@ public class EditorialServicio {
     }
 
     public List<Editorial> listarEditoriales() {
-        return editorialRepositorio.listarEditoriales();
+        return editorialRepositorio.findAll();
     }
     
      public Editorial buscarPorId( String id) throws ErrorServicio{
@@ -85,20 +85,20 @@ public class EditorialServicio {
         return editorialRepositorio.buscarEditorialPorNombre(nombre);
     }
 
+   @Transactional
+    public Editorial alta(String id) throws ErrorServicio {
+
+        Editorial editorial = editorialRepositorio.getById(id);
+        editorial.setAlta(true);
+        return editorialRepositorio.save(editorial);
+    }
+    
     @Transactional
-    public void bajaEditorial(String id) throws ErrorServicio {
+    public Editorial baja(String id) throws ErrorServicio {
 
-        Optional<Editorial> respuesta = editorialRepositorio.findById(id);
-
-        if (respuesta.isPresent()) {
-            Editorial editorial = respuesta.get();
-            editorial.setAlta(false);
-            //actualizamos
-            editorialRepositorio.save(editorial);
-        } else {
-            throw new ErrorServicio("No se encontro la editorial.");
-        }
-
+        Editorial editorial= editorialRepositorio.getById(id);
+        editorial.setAlta(false);
+        return editorialRepositorio.save(editorial);
     }
 
     public void validar(String nombre) throws ErrorServicio {
@@ -106,7 +106,5 @@ public class EditorialServicio {
         if (nombre == null || nombre.isEmpty()) {
             throw new ErrorServicio("El nombre no puede ser nulo.");
         }
-
     }
-
 }

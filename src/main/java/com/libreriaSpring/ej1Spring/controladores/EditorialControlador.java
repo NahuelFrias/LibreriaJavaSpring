@@ -4,8 +4,6 @@ import com.libreriaSpring.ej1Spring.entidades.Editorial;
 import com.libreriaSpring.ej1Spring.errores.ErrorServicio;
 import com.libreriaSpring.ej1Spring.servicios.EditorialServicio;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -76,4 +74,25 @@ public class EditorialControlador {
         }
     }
 
+    @GetMapping("/altaEditorial/{id}")
+    public String alta(ModelMap modelo, @PathVariable String id) {
+        try {
+            editorialServicio.alta(id);
+            modelo.put("exito", "Modificacion exitosa");
+            return "redirect:/editorial/listaEditoriales";
+        } catch (ErrorServicio ex) {
+            return "redirect:/";
+        }
+    }
+
+    @GetMapping("/bajaEditorial/{id}")
+    public String baja(ModelMap modelo, @PathVariable String id) {
+         try {
+            editorialServicio.baja(id);
+            modelo.put("exito", "Modificacion exitosa");
+            return "redirect:/editorial/listaEditoriales";
+        } catch (ErrorServicio ex) {
+            return "redirect:/";
+        }
+    }
 }

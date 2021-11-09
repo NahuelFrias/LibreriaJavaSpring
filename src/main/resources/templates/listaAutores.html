@@ -43,7 +43,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <table id="tabla" class="table table-dark table-striped">
             <thead>
                 <tr>
-                    <th>Id</th>
                     <th>Nombre y apellido</th>
                     <th>Activo</th>
                     <th>Modificar</th>
@@ -52,7 +51,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             </thead>
             <tbody th:each="autor : ${autores}">
                 <tr>
-                    <th th:text="${autor.id}"></th>
                     <td th:text="${autor. nombre}"></td>
                     <!-- Estas lineas son las de activo-->
                     <td>

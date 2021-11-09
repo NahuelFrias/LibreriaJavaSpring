@@ -44,7 +44,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <table id="tabla" class="table table-dark table-striped">
             <thead>
                 <tr>
-                    <!--<th>Id</th>-->
                     <th>ISBN</th>
                     <th>Titulo</th>
                     <th>Año</th>
@@ -59,7 +58,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             </thead>
             <tbody th:each="libro : ${libros}">
                 <tr>
-                    <!--<th th:text="${libro.id}"></th>-->
                     <td th:text="${libro.isbn}"></td>
                     <td th:text="${libro.titulo}"></td>
                     <td th:text="${libro.anio}"></td>
@@ -71,8 +69,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         <i th:if="${libro.alta}" class="fa fa-circle text-success"></i>
                         <i th:unless="${libro.alta}" class="fa fa-circle" style="color:red;"></i>
                     </td>
-                    <td><a th:href="@{/libro/modificarLibro/__${libro.id}__}" <button type="button" class="btn btn-light">Modificar</button></a></td>
-                    <td><a href="" <button type="button" class="btn btn-outline-danger">Eliminar</button></a></td>
+                    <td><a th:href="@{/libro/modificarLibro/__${libro.id}__}" <button type="button"
+                            class="btn btn-light">Modificar</button></a></td>
+                    <td>
+                        <a th:if="${libro.alta}" th:href="@{/libro/bajaLibro/__${libro.id}__}" <button type="button"
+                            class="btn btn-outline-danger">Baja</button></a>
+                        <a th:unless="${libro.alta}" th:href="@{/libro/altaLibro/__${libro.id}__}" <button type="button"
+                            class="btn btn-outline-success">Alta</button></a>
+                    </td>
                 </tr>
             </tbody>
         </table>

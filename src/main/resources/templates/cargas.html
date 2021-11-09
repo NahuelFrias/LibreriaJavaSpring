@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -22,16 +22,16 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
                     <a class="nav-link active" aria-current="page" href="/">Home</a>
-                    <a class="nav-link" href="/cargas">Carga</a>
-                    <a class="nav-link" href="/listas">Listas</a>
+                    <a class="nav-link" th:href="@{/cargas}">Carga</a>
+                    <a class="nav-link" th:href="@{/listas}">Listas</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <a href="/libro/cargarLibro" <button type="button" class="btn btn-light">Cargar Libros</button></a>
-    <a href="/autor/cargarAutor" <button type="button" class="btn btn-light">Cargar Autor</button></a>
-    <a href="/editorial/cargarEditorial" <button type="button" class="btn btn-light">Cargar Editorial</button></a>
+    <a th:href="@{/libro/cargarLibro}" <button type="button" class="btn btn-light">Cargar Libros</button></a>
+    <a th:href="@{/autor/cargarAutor}" <button type="button" class="btn btn-light">Cargar Autor</button></a>
+    <a th:href="@{/editorial/cargarEditorial}" <button type="button" class="btn btn-light">Cargar Editorial</button></a>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">

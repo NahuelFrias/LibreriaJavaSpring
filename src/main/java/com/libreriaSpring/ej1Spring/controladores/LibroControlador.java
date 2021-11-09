@@ -87,9 +87,9 @@ public class LibroControlador {
         modelo.put("libros", libros);
         return "listaLibros.html";
     }
-    
+
     @GetMapping("/modificarLibro/{id}")
-    public String modificar(ModelMap modelo, @PathVariable String id) throws ErrorServicio{
+    public String modificar(ModelMap modelo, @PathVariable String id) throws ErrorServicio {
         modelo.put("libro", libroServicio.buscarPorId(id));
         List<Autor> autores = autorServicio.listarAutores();
         modelo.put("autores", autores);
@@ -106,15 +106,14 @@ public class LibroControlador {
             @RequestParam @Nullable Integer anio,
             @RequestParam @Nullable Integer ejemplares,
             @RequestParam @Nullable Integer prestados,
-            @RequestParam @Nullable Autor autor,
-            @RequestParam @Nullable Editorial editorial,
             @RequestParam @Nullable String idAutor,
             @RequestParam @Nullable String idEditorial) {
         try {
-            libroServicio.modificarLibro(id, isbn, titulo, anio, ejemplares, prestados, autor, editorial, idAutor, idEditorial);
-            modelo.put("exito", "El Libro fue modificado con exito!");
+            libroServicio.modificarLibro(id, isbn, titulo, anio, ejemplares, prestados, idAutor, idEditorial);
+
             List<Libro> libros = libroServicio.listarLibros();
             modelo.put("libros", libros);
+            modelo.put("exito", "El Libro fue modificado con exito!");
             return "listaLibros.html";
         } catch (ErrorServicio ex) {
             //muestro los campos que si estaban llenos antes del error
@@ -131,9 +130,29 @@ public class LibroControlador {
             modelo.put("error", "Falto algun dato.");
             List<Libro> libros = libroServicio.listarLibros();
             modelo.put("libros", libros);
-            return "index.html";
+            return "listaLibros.html";
         }
-
     }
 
+    @GetMapping("/altaLibro/{id}")
+    public String alta(ModelMap modelo, @PathVariable String id) {
+         try {
+            libroServicio.alta(id);
+            modelo.put("exito", "Modificacion exitosa");
+            return "redirect:/libro/listaLibros";
+        } catch (ErrorServicio ex) {
+            return "redirect:/";
+        }
+    }
+
+    @GetMapping("/bajaLibro/{id}")
+    public String baja(ModelMap modelo, @PathVariable String id) {
+        try {
+            libroServicio.baja(id);
+            modelo.put("exito", "Modificacion exitosa");
+            return "redirect:/libro/listaLibros";
+        } catch (ErrorServicio ex) {
+            return "redirect:/";
+        }
+    }
 }
