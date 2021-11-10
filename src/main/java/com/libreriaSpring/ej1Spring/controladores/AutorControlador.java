@@ -69,9 +69,9 @@ public class AutorControlador {
 
         try {
             autorServicio.modificarAutor(id, nombre);
-            modelo.put("exito", "Modificacion exitosa");
             List<Autor> autores = autorServicio.listarAutores();
             modelo.put("autores", autores);
+            modelo.put("exito", "Modificacion exitosa");
             return "listaAutores.html";
         } catch (ErrorServicio ex) {
             modelo.put("error", "Falto algun dato");

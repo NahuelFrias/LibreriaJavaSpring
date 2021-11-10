@@ -33,15 +33,27 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
                         <a class="nav-link" th:href="@{/cargas}">Carga</a>
                         <a class="nav-link" th:href="@{/listas}">Listas</a>
-
                     </div>
                 </div>
             </div>
         </nav>
     </div>
 
+    <div th:if="${exito}!=null" class="card text-white bg-success mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Exito</h5>
+            <p class="card-text" th:text="${exito}"></p>
+        </div>
+    </div>
+    <div th:if="${error}!=null" class="card text-white bg-danger mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Error</h5>
+            <p class="card-text" th:text="${error}"></p>
+        </div>
+    </div>
+
     <div class="d-flex justify-content-center">
-        <table id="tabla" class="table table-dark table-striped">
+        <table id="tabla" class="table table-dark table-striped table-hover">
             <thead>
                 <tr>
                     <th>ISBN</th>

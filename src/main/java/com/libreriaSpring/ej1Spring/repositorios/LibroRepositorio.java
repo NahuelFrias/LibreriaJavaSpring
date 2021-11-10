@@ -8,14 +8,14 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface LibroRepositorio extends JpaRepository <Libro, String> {
+public interface LibroRepositorio extends JpaRepository<Libro, String> {
 
-    @Query ("SELECT l FROM Libro l WHERE l.titulo = :titulo")
-    public List<Libro> buscarLibroPorTitulo(@Param ("titulo") String titulo);
-    
-    @Query ("SELECT l FROM Libro l WHERE l.autor.nombre = :autor")
-    public List<Libro> buscarLibroPorAutor(@Param ("autor") String autor);
-    
-    @Query ("SELECT l FROM Libro l WHERE l.editorial.nombre = :editorial")
-    public List<Libro> buscarLibroPorEditorial(@Param ("editorial") String editorial);
+    @Query("SELECT l FROM Libro l WHERE l.titulo = :titulo")
+    public List<Libro> buscarLibroPorTitulo(@Param("titulo") String titulo);
+
+    @Query("SELECT l FROM Libro l WHERE l.autor.nombre = :autor")
+    public List<Libro> buscarLibroPorAutor(@Param("autor") String autor);
+
+    @Query("SELECT l FROM Libro l WHERE l.editorial.nombre = :editorial")
+    public List<Libro> buscarLibroPorEditorial(@Param("editorial") String editorial);
 }

@@ -39,8 +39,21 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         </nav>
     </div>
 
+    <div th:if="${exito}!=null" class="card text-white bg-success mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Exito</h5>
+            <p class="card-text" th:text="${exito}"></p>
+        </div>
+    </div>
+    <div th:if="${error}!=null" class="card text-white bg-danger mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Error</h5>
+            <p class="card-text" th:text="${error}"></p>
+        </div>
+    </div>
+
     <div class="d-flex justify-content-center">
-        <table id="tabla" class="table table-dark table-striped">
+        <table id="tabla" class="table table-dark table-striped table-hover">
             <thead>
                 <tr>
                     <th>Nombre y apellido</th>
@@ -58,10 +71,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         <i th:unless="${autor.alta}" class="fa fa-circle" style="color:red;"></i>
                     </td>
                     <!--le paso el id para modificar-->
-                    <td><a th:href="@{/autor/modificarAutor/__${autor.id}__}" <button type="button" class="btn btn-light">Modificar</button></a></td>
+                    <td><a th:href="@{/autor/modificarAutor/__${autor.id}__}" <button type="button"
+                            class="btn btn-light">Modificar</button></a></td>
                     <td>
-                        <a th:if="${autor.alta}" th:href="@{/autor/bajaAutor/__${autor.id}__}" <button type="button" class="btn btn-outline-danger">Baja</button></a>
-                        <a th:unless="${autor.alta}" th:href="@{/autor/altaAutor/__${autor.id}__}" <button type="button" class="btn btn-outline-success">Alta</button></a>
+                        <a th:if="${autor.alta}" th:href="@{/autor/bajaAutor/__${autor.id}__}" <button type="button"
+                            class="btn btn-outline-danger">Baja</button></a>
+                        <a th:unless="${autor.alta}" th:href="@{/autor/altaAutor/__${autor.id}__}" <button type="button"
+                            class="btn btn-outline-success">Alta</button></a>
                     </td>
                 </tr>
             </tbody>
