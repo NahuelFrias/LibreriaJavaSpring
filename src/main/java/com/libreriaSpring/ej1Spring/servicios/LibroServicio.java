@@ -7,9 +7,9 @@ import com.libreriaSpring.ej1Spring.errores.ErrorServicio;
 import com.libreriaSpring.ej1Spring.repositorios.LibroRepositorio;
 import java.util.List;
 import java.util.Optional;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class LibroServicio {
@@ -67,9 +67,9 @@ public class LibroServicio {
             libro.setTitulo(titulo);
             libro.setAutor(autor);
             libro.setEditorial(editorial);
-            
+
             libroRepositorio.save(libro);
-            
+
         } else {
             throw new ErrorServicio("No se encontro el libro.");
         }
@@ -81,14 +81,15 @@ public class LibroServicio {
         libro.setAlta(true);
         return libroRepositorio.save(libro);
     }
-    
+
     @Transactional
     public Libro baja(String id) throws ErrorServicio {
-        Libro libro= libroRepositorio.getById(id);
+        Libro libro = libroRepositorio.getById(id);
         libro.setAlta(false);
         return libroRepositorio.save(libro);
     }
-    
+
+    @Transactional(readOnly = true)
     public List<Libro> listarLibros() {
         return libroRepositorio.findAll();
     }
@@ -97,6 +98,7 @@ public class LibroServicio {
     Se puede hacer de esta manera
     o con lenguaje sql en el repositorio
      */
+    @Transactional(readOnly = true)
     public Libro buscarPorId(String id) throws ErrorServicio {
         Optional<Libro> respuesta = libroRepositorio.findById(id);
 
@@ -108,14 +110,17 @@ public class LibroServicio {
         }
     }
 
+    @Transactional(readOnly = true)
     public List<Libro> buscarLibroPorTitulo(String titulo) {
         return libroRepositorio.buscarLibroPorTitulo(titulo);
     }
 
+    @Transactional(readOnly = true)
     public List<Libro> buscarLibroPorEditorial(String editorial) {
         return libroRepositorio.buscarLibroPorEditorial(editorial);
     }
 
+    @Transactional(readOnly = true)
     public List<Libro> buscarLibroPorAutor(String autor) {
         return libroRepositorio.buscarLibroPorAutor(autor);
     }

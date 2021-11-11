@@ -5,9 +5,9 @@ import com.libreriaSpring.ej1Spring.errores.ErrorServicio;
 import com.libreriaSpring.ej1Spring.repositorios.AutorRepositorio;
 import java.util.List;
 import java.util.Optional;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AutorServicio {
@@ -71,7 +71,7 @@ public class AutorServicio {
         autor.setAlta(true);
         return autorRepositorio.save(autor);
     }
-    
+
     @Transactional
     public Autor baja(String id) throws ErrorServicio {
         Autor autor = autorRepositorio.getById(id);
@@ -79,6 +79,7 @@ public class AutorServicio {
         return autorRepositorio.save(autor);
     }
 
+    @Transactional(readOnly = true)
     public Autor buscarPorId(String id) throws ErrorServicio {
         Optional<Autor> respuesta = autorRepositorio.findById(id);
 
@@ -90,10 +91,12 @@ public class AutorServicio {
         }
     }
 
+    @Transactional(readOnly = true)
     public List<Autor> listarAutores() {
         return autorRepositorio.findAll();
     }
 
+    @Transactional(readOnly = true)
     public Autor buscarAutorPorNombre(String nombre) {
         return autorRepositorio.buscarAutorPorNombre(nombre);
     }

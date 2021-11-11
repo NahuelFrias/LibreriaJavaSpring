@@ -5,9 +5,9 @@ import com.libreriaSpring.ej1Spring.errores.ErrorServicio;
 import com.libreriaSpring.ej1Spring.repositorios.EditorialRepositorio;
 import java.util.List;
 import java.util.Optional;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class EditorialServicio {
@@ -66,37 +66,40 @@ public class EditorialServicio {
         }
     }
 
+    @Transactional(readOnly = true)
     public List<Editorial> listarEditoriales() {
         return editorialRepositorio.findAll();
     }
-    
-     public Editorial buscarPorId( String id) throws ErrorServicio{
+
+    @Transactional(readOnly = true)
+    public Editorial buscarPorId(String id) throws ErrorServicio {
         Optional<Editorial> respuesta = editorialRepositorio.findById(id);
-        
-        if(respuesta.isPresent()){
+
+        if (respuesta.isPresent()) {
             Editorial editorial = respuesta.get();
             return editorial;
-        }else{
+        } else {
             throw new ErrorServicio("No se encontro la Editorial.");
         }
     }
 
+    @Transactional(readOnly = true)
     public Editorial buscarEditorialPorNombre(String nombre) {
         return editorialRepositorio.buscarEditorialPorNombre(nombre);
     }
 
-   @Transactional
+    @Transactional
     public Editorial alta(String id) throws ErrorServicio {
 
         Editorial editorial = editorialRepositorio.getById(id);
         editorial.setAlta(true);
         return editorialRepositorio.save(editorial);
     }
-    
+
     @Transactional
     public Editorial baja(String id) throws ErrorServicio {
 
-        Editorial editorial= editorialRepositorio.getById(id);
+        Editorial editorial = editorialRepositorio.getById(id);
         editorial.setAlta(false);
         return editorialRepositorio.save(editorial);
     }

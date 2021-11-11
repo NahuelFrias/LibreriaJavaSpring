@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ClienteServicio implements UserDetailsService { //toma el nombre del usuario como parametro y devuelve un User
@@ -17,6 +18,7 @@ public class ClienteServicio implements UserDetailsService { //toma el nombre de
     @Autowired
     private ClienteRepositorio clienteRepositorio;
 
+    @Transactional
     public void registrar(String nombre, String apellido, Long documento, String mail, String clave) throws ErrorServicio {
         
         //agregar MultipartFile archivo para la foto
@@ -39,7 +41,8 @@ public class ClienteServicio implements UserDetailsService { //toma el nombre de
 
         clienteRepositorio.save(cliente);
     }
-
+    
+    @Transactional
     public void modificar(String id, String nombre, String apellido, Long documento, String mail, String clave) throws ErrorServicio {
 
         validar(nombre, apellido, documento, mail, clave);
