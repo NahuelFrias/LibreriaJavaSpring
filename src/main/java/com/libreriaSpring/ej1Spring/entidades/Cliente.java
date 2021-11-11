@@ -16,7 +16,8 @@ public class Cliente implements Serializable {
     private Long documento;
     private String nombre;
     private String apellido;
-    private String telefono;
+    private String mail;
+    private String clave;
     private Boolean alta;
 
     public String getId() {
@@ -51,19 +52,27 @@ public class Cliente implements Serializable {
         this.apellido = apellido;
     }
 
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
     public Boolean getAlta() {
         return alta;
     }
 
     public void setAlta(Boolean alta) {
         this.alta = alta;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public String getClave() {
+        return clave;
+    }
+
+    public void setClave(String clave) {
+        this.clave = clave;
     }
 }
