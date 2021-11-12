@@ -23,7 +23,7 @@
                                 </button>
                                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                                         <div class="navbar-nav">
-                                                <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
+                                                <a class="nav-link active" aria-current="page" th:href="@{/}">Libreria</a>
                                                 <a class="nav-link" th:href="@{/cargas}">Carga</a>
                                                 <a class="nav-link" th:href="@{/listas}">Listas</a>
 
@@ -57,7 +57,7 @@
                         <select class="form-select" id="floatingSelect" name="idAutor"
                                 aria-label="Floating label select example">
                                 <option selected>Selecciona un Autor</option>
-                                <option th:each="autor : ${autores}" th:value="${libro.autor.id}" th:text="${autor.nombre}">
+                                <option th:each="autor : ${autores}" th:value="${autor.id}" th:text="${autor.nombre}">
                                 </option>
                         </select>
                         <p class="text-muted"><label for="floatingSelect">*Si no encuentras el Autor ve a la pestaña de
@@ -69,7 +69,7 @@
                         <select class="form-select" id="floatingSelect" name="idEditorial"
                                 aria-label="Floating label select example">
                                 <option selected>Selecciona una Editorial</option>
-                                <option th:each="editorial : ${editoriales}" th:value="${libro.editorial.id}"
+                                <option th:each="editorial : ${editoriales}" th:value="${editorial.id}"
                                         th:text="${editorial.nombre}">
                                 </option>
                         </select>

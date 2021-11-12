@@ -1,16 +1,23 @@
 package com.libreriaSpring.ej1Spring.servicios;
 
 import com.libreriaSpring.ej1Spring.entidades.Cliente;
+import com.libreriaSpring.ej1Spring.entidades.Foto;
 import com.libreriaSpring.ej1Spring.errores.ErrorServicio;
 import com.libreriaSpring.ej1Spring.repositorios.ClienteRepositorio;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ClienteServicio implements UserDetailsService { //toma el nombre del usuario como parametro y devuelve un User
@@ -18,43 +25,52 @@ public class ClienteServicio implements UserDetailsService { //toma el nombre de
     @Autowired
     private ClienteRepositorio clienteRepositorio;
 
+    @Autowired
+    private FotoServicio fotoServicio;
+
     @Transactional
-    public void registrar(String nombre, String apellido, Long documento, String mail, String clave) throws ErrorServicio {
-        
-        //agregar MultipartFile archivo para la foto
-        validar(nombre, apellido, documento, mail, clave);
+    public void registrar(MultipartFile archivo, String nombre, String apellido, String mail, String clave, String clave2) throws ErrorServicio {
+
+        validar(nombre, apellido, mail, clave, clave2);
 
         Cliente cliente = new Cliente();
         cliente.setNombre(nombre);
         cliente.setApellido(apellido);
-        cliente.setDocumento(documento);
+        
         cliente.setMail(mail);
         //encripto la clave
         String encriptada = new BCryptPasswordEncoder().encode(clave);
         cliente.setClave(encriptada);
         cliente.setAlta(Boolean.TRUE);
-        
-        //Foto foto = fotoServicio.guardar(archivo)
-        //cliente.setFoto(foto)
-        
-        //notificacionServicio.enviar("Bienvenido a la libreria", "Libreria", usuario.getMail())
 
+        Foto foto = fotoServicio.guardar(archivo);
+        cliente.setFoto(foto);
+
+        //notificacionServicio.enviar("Bienvenido a la libreria", "Libreria", usuario.getMail())
         clienteRepositorio.save(cliente);
     }
-    
-    @Transactional
-    public void modificar(String id, String nombre, String apellido, Long documento, String mail, String clave) throws ErrorServicio {
 
-        validar(nombre, apellido, documento, mail, clave);
+    @Transactional
+    public void modificar(MultipartFile archivo, String id, String nombre, String apellido, String mail, String clave, String clave2) throws ErrorServicio {
+
+        validar(nombre, apellido, mail, clave, clave2);
 
         Optional<Cliente> respuesta = clienteRepositorio.findById(id);
         if (respuesta.isPresent()) {
             Cliente cliente = respuesta.get();
             cliente.setNombre(nombre);
             cliente.setApellido(apellido);
-            cliente.setDocumento(documento);
             cliente.setMail(mail);
-            cliente.setClave(clave);
+            String encriptada = new BCryptPasswordEncoder().encode(clave);
+            cliente.setClave(encriptada);
+
+            String idFoto = null;
+            if (cliente.getFoto().getId() != null) {
+                idFoto = cliente.getFoto().getId();
+            }
+
+            Foto foto = fotoServicio.actualizar(idFoto, archivo);
+            cliente.setFoto(foto);
 
             clienteRepositorio.save(cliente);
         } else {
@@ -62,7 +78,7 @@ public class ClienteServicio implements UserDetailsService { //toma el nombre de
         }
     }
 
-    private void validar(String nombre, String apellido, Long documento, String mail, String clave) throws ErrorServicio {
+    private void validar(String nombre, String apellido, String mail, String clave, String clave2) throws ErrorServicio {
 
         if (nombre == null || nombre.isEmpty()) {
             throw new ErrorServicio("El nombre no puede ser nulo");
@@ -70,19 +86,47 @@ public class ClienteServicio implements UserDetailsService { //toma el nombre de
         if (apellido == null || apellido.isEmpty()) {
             throw new ErrorServicio("El apellido no puede ser nulo");
         }
-        if (documento == null) {
-            throw new ErrorServicio("El documento no puede ser nulo");
-        }
         if (mail == null || mail.isEmpty()) {
             throw new ErrorServicio("El mail no puede ser nulo");
         }
-        if (mail == null || mail.isEmpty()) {
+        if ( mail.isEmpty() || mail.contains("  ")) {
             throw new ErrorServicio("El mail no puede ser nulo");
+        }
+        if (clienteRepositorio.buscarPorMail(mail) != null) {
+            throw new ErrorServicio("El Email ya esta en uso");
+        }
+        if(!clave.equals(clave2)){
+            throw new ErrorServicio("Las claves no coinciden.");
         }
     }
 
+    /*cambiar siempre el String a "mail".
+    El metodo recibe el nombre del cliente, lo busca en el repositorio
+    y los transforma en un cliente de Spring Security.
+    Este metodo es llamado siempre que el cliente haga Login*/
     @Override
-    public UserDetails loadUserByUsername(String string) throws UsernameNotFoundException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
+        Cliente cliente = clienteRepositorio.buscarPorMail(mail);
+        if (cliente != null) {
+
+            //esta lista contiene el listado de permisos del cliente
+            List<GrantedAuthority> permisos = new ArrayList<>();
+
+            //creo los permisos
+            GrantedAuthority p1 = new SimpleGrantedAuthority("MODULO_FOTOS");
+            permisos.add(p1);
+            /*
+            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+            HttpSession session = attr.getRequest().getSession(true);
+            session.setAttribute("usuariosession", usuario);
+             */
+
+            //transformo al cliente en un cliente del dominio de Spring
+            //nos pide usuario,clave y permisos
+            User user = new User(cliente.getMail(), cliente.getClave(), permisos);
+            return user;
+        } else {
+            return null;
+        }
     }
 }

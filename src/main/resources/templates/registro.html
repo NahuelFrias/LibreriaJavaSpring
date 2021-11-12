@@ -42,27 +42,22 @@
                             <p th:if="${error != null}" th:text="${error}" style="color:red;"></p>
 
                             <label>Nombre</label>
-                            <input type="text" class="form-control" name="nombre" th:value="${nombre}"/>
+                            <input type="text" class="form-control" name="nombre" th:value="${nombre}" />
 
                             <label>Apellido</label>
-                            <input type="text" class="form-control" name="apellido" th:value="${apellido}"/>
-
-                            <label>Documento</label>
-                            <input type="text" class="form-control" name="documento" th:value="${documento}"/>
+                            <input type="text" class="form-control" name="apellido" th:value="${apellido}" />
 
                             <label>E-Mail</label>
-                            <input type="email" class="form-control" name="mail" th:value="${mail}"/>
+                            <input type="email" class="form-control" name="mail" th:value="${mail}" />
 
-                            <!--
-                  <label>Foto</label>
-                  <input type="file" class="form-control" name="archivo"/>
-                  -->
+                            <label>Foto</label>
+                            <input type="file" class="form-control" name="archivo" />
 
                             <label>Clave</label>
-                            <input type="password" class="form-control" name="clave1" th:value="${clave1}"/>
+                            <input type="password" class="form-control" name="clave1" th:value="${clave1}" />
 
                             <label>Repetir Clave</label>
-                            <input type="password" class="form-control" name="clave2" th:value="${clave2}"/>
+                            <input type="password" class="form-control" name="clave2" th:value="${clave2}" />
 
                             <br /><button type="submit" class="btn btn-primary">Registrarme</button>
                         </form>

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -32,6 +33,25 @@ public class PortalControlador {
         return "index.html";
     }
 
+    @GetMapping("/inicio")
+    public String inicio(ModelMap modelo) {
+        modelo.put("titulo", "Bienvenido a la Libreria!");
+        modelo.put("descripcion", "Haz iniciado sesion con exito!");
+        return "inicio.html";
+    }
+
+    @GetMapping("/login")
+    public String login(@RequestParam(required = false) String error, @RequestParam(required = false) String logout, ModelMap modelo) { //no siempre puede venir este parametro error
+        if (error != null) {
+            modelo.put("error", "E-Mail o clave incorrectos.");
+            //modelo.put("mail", )
+        }
+        if (logout != null) {
+            modelo.put("logout", "Ha salido correctamente.");
+        }
+        return "login.html";
+    }
+
     @GetMapping("/registro")
     public String registro() {
         return "registro.html";
@@ -39,14 +59,14 @@ public class PortalControlador {
 
     @PostMapping("/registrar")
     public String registrar(ModelMap modelo,
+            MultipartFile archivo,
             @RequestParam @Nullable String nombre,
             @RequestParam @Nullable String apellido,
-            @RequestParam @Nullable Long documento,
             @RequestParam @Nullable String mail,
             @RequestParam @Nullable String clave1,
             @RequestParam @Nullable String clave2) {
         try {
-            clienteServicio.registrar(nombre, apellido, documento, mail, clave1);
+            clienteServicio.registrar(archivo, nombre, apellido, mail, clave1, clave2);
             modelo.put("titulo", "Bienvenido a la Libreria!");
             modelo.put("descripcion", "El cliente fue registrado con exito!");
             return "inicio.html";
@@ -54,18 +74,11 @@ public class PortalControlador {
             modelo.put("error", ex.getMessage());
             modelo.put("nombre", nombre);
             modelo.put("apellido", apellido);
-            modelo.put("documento", documento);
             modelo.put("mail", mail);
             modelo.put("clave1", clave1);
             modelo.put("clave2", clave2);
             return "registro.html";
         }
-
-    }
-
-    @GetMapping("/login")
-    public String login() {
-        return "login.html";
     }
 
     @GetMapping("/cargas")

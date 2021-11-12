@@ -37,12 +37,12 @@
                 <div class="col-lg-6 order-lg-1">
                     <div class="p-5">
                         <h2 class="display-4">Ingresá a la libreria</h2>
-                        <form th:action="@{/cliente/login}" method="POST">
-                            <!-- <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
-                   <p th:if="${logout != null}" th:text="${logout}" style="color:green"></p> -->
+                        <form th:action="@{/logincheck}" method="POST">
+                            <p th:if="${error != null}" th:text="${error}" style="color:red"></p>
+                            <p th:if="${logout != null}" th:text="${logout}" style="color:green"></p>
 
                             <label>E-Mail</label>
-                            <input type="email" class="form-control" name="username" />
+                            <input type="email" class="form-control" name="username" th:value="${mail}" />
 
                             <label>Clave</label>
                             <input type="password" class="form-control" name="password" />
