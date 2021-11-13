@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<!--
-Utilizo los tags de thymeleaf
--->
+
 <html lang="en" xmlns="http://www.thymeleaf.org">
 
 <head>
@@ -29,28 +27,23 @@ Utilizo los tags de thymeleaf
                                                                 th:href="@{/}">Libreria</a>
                                                 </li>
                                                 <li class="nav-item">
-                                                        <a class="nav-link active" th:href="@{/registro}">Registro</a>
+                                                        <a class="nav-link" th:href="@{/registro}">Registro</a>
                                                 </li>
                                                 <li class="nav-item">
-                                                        <a class="nav-link active" th:href="@{/login}">Login</a>
+                                                        <a class="nav-link" th:href="@{/login}">Login</a>
                                                 </li>
                                         </ul>
                                 </div>
                         </div>
                 </nav>
         </div>
-
-        <figure class="text-center">
-                <blockquote class="blockquote">
-                        <p>Bienvenido!</p>
-                        <div class="d-grid gap-2 col-6 mx-auto">
-                                <a th:href="@{/registro}" <button class="btn btn-light"
-                                        type="button">Registrate!</button></a>
-                                <a th:href="@{/login}" <button class="btn btn-light"
-                                        type="button">Ingresa!</button></a>
-                        </div>
-                </blockquote>
-        </figure>
+        <div>
+                <h1 th:text="${codigo}"></h1>
+                <h2 th:text="${mensaje == null ? 'Intenta nuevamente' : mensaje}"></h2>
+        </div>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <a th:href="@{/}" <button class="btn btn-primary me-md-2" type="button">Volver</button></a>
+        </div>
 
         <div class="container">
                 <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">

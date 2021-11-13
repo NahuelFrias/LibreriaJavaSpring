@@ -7,6 +7,7 @@ import com.libreriaSpring.ej1Spring.repositorios.ClienteRepositorio;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,6 +18,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -113,13 +116,14 @@ public class ClienteServicio implements UserDetailsService { //toma el nombre de
             List<GrantedAuthority> permisos = new ArrayList<>();
 
             //creo los permisos
-            GrantedAuthority p1 = new SimpleGrantedAuthority("MODULO_FOTOS");
+            //con este rol va a poder ingresar a algunos metodos
+            GrantedAuthority p1 = new SimpleGrantedAuthority("ROLE_USUARIO_REGISTRADO");
             permisos.add(p1);
-            /*
+            //recupero el usuario que inicio sesion
             ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
             HttpSession session = attr.getRequest().getSession(true);
-            session.setAttribute("usuariosession", usuario);
-             */
+            session.setAttribute("clientesession", cliente);
+             
 
             //transformo al cliente en un cliente del dominio de Spring
             //nos pide usuario,clave y permisos

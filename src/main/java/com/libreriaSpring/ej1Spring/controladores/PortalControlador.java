@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,10 +34,13 @@ public class PortalControlador {
         return "index.html";
     }
 
+    //SprignSecurity debe autorizar a aingresar a esta url
+    //la regla para ingresar es que tenga el cliente algun rol de los que pasamos como parametro
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @GetMapping("/inicio")
     public String inicio(ModelMap modelo) {
         modelo.put("titulo", "Bienvenido a la Libreria!");
-        modelo.put("descripcion", "Haz iniciado sesion con exito!");
+        modelo.put("descripcion", "Haz iniciado sesion con exito.");
         return "inicio.html";
     }
 
