@@ -31,6 +31,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             <a class="nav-link active font-weight-bold" aria-current="page" th:href="@{/}">Libreria</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link active" th:href="@{/inicio}">Inicio</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link active" th:href="@{/cargas}">Carga</a>
                         </li>
                         <li class="nav-item">
@@ -104,7 +107,26 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     </div>
 
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <a th:href="@{/listas}" <button class="btn btn-primary me-md-2" type="button">Volver</button></a>
+        <a th:href="@{/listas}" <button class="btn btn-outline-primary me-md-2" type="button">Volver</button></a>
+    </div>
+
+    <div class="container">
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+            <figcaption class="blockquote-footer">
+                Creador: <cite title="Source Title">Leonardo Nahuel Frias</cite>
+            </figcaption>
+            <a href="/"
+                class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+                <svg class="bi me-2" width="40" height="32">
+                    <use xlink:href="#bootstrap"></use>
+                </svg>
+            </a>
+            <ul class="nav col-md-4 justify-content-end">
+                <li class="nav-item"><a th:href="@{/}" class="nav-link px-2 text-muted">Home</a></li>
+                <li class="nav-item"><a th:href="@{https://github.com/NahuelFrias}"
+                        class="nav-link px-2 text-muted">GitHub</a></li>
+            </ul>
+        </footer>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
