@@ -1,8 +1,13 @@
 body{
-    margin: 0;
-    padding: 0;
-    background: url(../img/biblioteca.jpg);   
+    margin:0; 
+    padding:0; 
+    background: url(../img/biblioteca1.jpg);
+    background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     font-family: sans-serif;
+	height: 100vh;
 }
+
+
+

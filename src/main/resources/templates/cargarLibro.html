@@ -83,7 +83,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 <option selected>Selecciona un Autor</option>
                 <option th:each="autor : ${autores}" th:value="${autor.id}" th:text="${autor.nombre}"></option>
             </select>
-            <p class="text-muted"><label for="floatingSelect">*Si no encuentras el Autor ve a la pestaña de carga de
+            <p class="text-muted"><label for="floatingSelect">*Si no encuentras el Autor ve a la pestaña de
+                    carga de
                     Autor</label></p>
         </div>
 
@@ -95,7 +96,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 <option th:each="editorial : ${editoriales}" th:value="${editorial.id}" th:text="${editorial.nombre}">
                 </option>
             </select>
-            <p class="text-muted"><label for="floatingSelect">*Si no encuentras la Editorial ve a la pestaña de carga de
+            <p class="text-muted"><label for="floatingSelect">*Si no encuentras la Editorial ve a la pestaña de
+                    carga de
                     Editorial</label></p>
         </div>
 

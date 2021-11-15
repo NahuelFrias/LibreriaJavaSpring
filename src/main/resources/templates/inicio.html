@@ -45,6 +45,12 @@ Utilizo los tags de thymeleaf
                         </div>
                 </nav>
         </div>
+        <div th:if="${exito}!=null" class="card text-white bg-success mb-3">
+                <div class="card-body">
+                        <h5 class="card-title">Exito</h5>
+                        <p class="card-text" th:text="${exito}"></p>
+                </div>
+        </div>
 
         <figure class="text-center">
                 <blockquote class="blockquote">
@@ -53,6 +59,9 @@ Utilizo los tags de thymeleaf
                         <h3 th:if="${session.clientesession != null}"
                                 th:text="${'Cliente: ' + session.clientesession.nombre + ' ' +session.clientesession.apellido}">
                         </h3>
+                        <a th:href="@{/cliente/editar-perfil/__${session.clientesession.id}__}"
+                                class="btn btn-light">Configura tu perfil!</a>
+
                 </blockquote>
         </figure>
 

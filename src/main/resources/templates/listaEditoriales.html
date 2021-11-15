@@ -63,37 +63,43 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <p class="card-text" th:text="${error}"></p>
         </div>
     </div>
+    <figure class="text-center">
+        <blockquote class="blockquote">
+            <div class="d-flex justify-content-center">
+                <table id="tabla" class="table table-hover">
+                    <thead class="table-secondary">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Activo</th>
+                            <th>Modificar</th>
+                            <th>Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody th:each="editorial : ${editoriales}">
+                        <tr>
+                            <td th:text="${editorial. nombre}"></td>
+                            <td>
+                                <!--condicional de thymeleaf-->
+                                <i th:if="${editorial.alta}" class="fa fa-circle text-success"></i>
+                                <i th:unless="${editorial.alta}" class="fa fa-circle" style="color:red;"></i>
+                            </td>
+                            <td><a th:href="@{/editorial/modificarEditorial/__${editorial.id}__}" <button type="button"
+                                    class="btn btn-light">Modificar</button></a></td>
+                            <td>
+                                <a th:if="${editorial.alta}" th:href="@{/editorial/bajaEditorial/__${editorial.id}__}"
+                                    <button type="button" class="btn btn-outline-danger">Baja</button></a>
+                                <a th:unless="${editorial.alta}"
+                                    th:href="@{/editorial/altaEditorial/__${editorial.id}__}" <button type="button"
+                                    class="btn btn-outline-success">Alta</button></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
 
-    <div class="d-flex justify-content-center">
-        <table id="tabla" class="table table-hover">
-            <thead class="table-secondary">
-                <tr>
-                    <th>Nombre</th>
-                    <th>Activo</th>
-                    <th>Modificar</th>
-                    <th>Eliminar</th>
-                </tr>
-            </thead>
-            <tbody th:each="editorial : ${editoriales}">
-                <tr>
-                    <td th:text="${editorial. nombre}"></td>
-                    <td>
-                        <!--condicional de thymeleaf-->
-                        <i th:if="${editorial.alta}" class="fa fa-circle text-success"></i>
-                        <i th:unless="${editorial.alta}" class="fa fa-circle" style="color:red;"></i>
-                    </td>
-                    <td><a th:href="@{/editorial/modificarEditorial/__${editorial.id}__}" <button type="button"
-                            class="btn btn-light">Modificar</button></a></td>
-                    <td>
-                        <a th:if="${editorial.alta}" th:href="@{/editorial/bajaEditorial/__${editorial.id}__}" <button
-                            type="button" class="btn btn-outline-danger">Baja</button></a>
-                        <a th:unless="${editorial.alta}" th:href="@{/editorial/altaEditorial/__${editorial.id}__}"
-                            <button type="button" class="btn btn-outline-success">Alta</button></a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+            </div>
+        </blockquote>
+    </figure>
+
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
         <a th:href="@{/listas}" <button class="btn btn-outline-primary me-md-2" type="button">Volver</button></a>
     </div>

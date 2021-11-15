@@ -80,6 +80,18 @@ public class ClienteServicio implements UserDetailsService { //toma el nombre de
             throw new ErrorServicio("No se encontro el Cliente");
         }
     }
+    
+    public Cliente buscarPorId(String id) throws ErrorServicio{
+        
+        Optional<Cliente> respuesta = clienteRepositorio.findById(id);
+        
+        if(respuesta.isPresent()){
+            Cliente cliente = respuesta.get();
+            return cliente;
+        } else {
+            throw new ErrorServicio("No se encontro el usuario buscado.");
+        }
+    }
 
     private void validar(String nombre, String apellido, String mail, String clave, String clave2) throws ErrorServicio {
 
@@ -95,9 +107,10 @@ public class ClienteServicio implements UserDetailsService { //toma el nombre de
         if ( mail.isEmpty() || mail.contains("  ")) {
             throw new ErrorServicio("El mail no puede ser nulo");
         }
+        /*
         if (clienteRepositorio.buscarPorMail(mail) != null) {
             throw new ErrorServicio("El Email ya esta en uso");
-        }
+        }*/
         if(!clave.equals(clave2)){
             throw new ErrorServicio("Las claves no coinciden.");
         }
