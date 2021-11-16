@@ -43,7 +43,7 @@ public class ConfiguracionesSeguridad extends WebSecurityConfigurerAdapter {
                             .permitAll()
                 .and().logout() // Aca configuro la salida
                             .logoutUrl("/logout")//sprin security desloguea desde esta url
-                            .logoutSuccessUrl("/login")//y nos redirige aca
+                            .logoutSuccessUrl("/login?logout")//y nos redirige aca
                             .permitAll()
                 .and().csrf().disable();
                 //con estas lineas no me manda el parametro de logout y no llega el msj de deslogueado

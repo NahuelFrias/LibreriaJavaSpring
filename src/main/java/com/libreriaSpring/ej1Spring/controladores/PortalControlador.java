@@ -33,16 +33,16 @@ public class PortalControlador {
     @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @GetMapping("/inicio")
     public String inicio(ModelMap modelo) {
-        modelo.put("titulo", "Bienvenido a la Libreria!");
-        modelo.put("descripcion", "Haz iniciado sesion con exito.");
-        return "inicio.html";
+
+            modelo.put("titulo", "Bienvenido a la Libreria!");
+            modelo.put("descripcion", "Haz iniciado sesion con exito.");
+            return "inicio.html";
     }
 
     @GetMapping("/login")
     public String login(@RequestParam(required = false) String error, @RequestParam(required = false) String logout, ModelMap modelo) { //no siempre puede venir este parametro error
         if (error != null) {
             modelo.put("error", "E-Mail o clave incorrectos.");
-            //modelo.put("mail", )
         }
         if (logout != null) {
             modelo.put("logout", "Ha salido correctamente.");

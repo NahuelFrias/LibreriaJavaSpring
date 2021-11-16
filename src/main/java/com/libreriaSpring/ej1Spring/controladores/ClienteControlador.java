@@ -6,6 +6,7 @@ import com.libreriaSpring.ej1Spring.servicios.ClienteServicio;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,8 +23,16 @@ public class ClienteControlador {
     @Autowired
     private ClienteServicio clienteServicio;
 
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @GetMapping("/editar-perfil/{id}")
-    public String editarPerfil(@PathVariable String id, ModelMap modelo) throws ErrorServicio {
+    public String editarPerfil(HttpSession session, @PathVariable String id, ModelMap modelo) throws ErrorServicio {
+
+        //securiso la sesion para que no pueda pegar id de otra persona
+        //y editar su perfil
+        Cliente login = (Cliente) session.getAttribute("clientesession");
+        if (login == null || !login.getId().equals(id)) {
+            return "redirect:/inicio";
+        }
 
         try {
             Cliente cliente = clienteServicio.buscarPorId(id);
@@ -34,6 +43,7 @@ public class ClienteControlador {
         return "perfil.html";
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @PostMapping("/actualizar-perfil")
     public String registrar(ModelMap modelo,
             HttpSession session,
@@ -44,9 +54,12 @@ public class ClienteControlador {
             @RequestParam @Nullable String mail,
             @RequestParam @Nullable String clave1,
             @RequestParam @Nullable String clave2) {
-        Cliente cliente = null;
         try {
-            cliente = clienteServicio.buscarPorId(id);
+            Cliente login = (Cliente) session.getAttribute("clientesession");
+            if (login == null || !login.getId().equals(id)) {
+                return "redirect:/inicio";
+            }
+            Cliente cliente = clienteServicio.buscarPorId(id);
             clienteServicio.modificar(archivo, id, nombre, apellido, mail, clave1, clave2);
             modelo.put("exito", "Modificacion exitosa!");
             session.setAttribute("clientesession", cliente);
