@@ -47,6 +47,20 @@
             </div>
         </nav>
     </div>
+
+    <div th:if="${exito}!=null" class="card text-white bg-success mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Exito</h5>
+            <p class="card-text" th:text="${exito}"></p>
+        </div>
+    </div>
+    <div th:if="${error}!=null" class="card text-white bg-danger mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Error</h5>
+            <p class="card-text" th:text="${error}"></p>
+        </div>
+    </div>
+
     <figure class="text-center">
         <blockquote class="blockquote">
             <div class="d-flex justify-content-center">
@@ -56,9 +70,8 @@
                             <th>Nombre</th>
                             <th>Apellido</th>
                             <th>E-Mail</th>
-                            <th>Activo</th>
-                            <th>Modificar</th>
-                            <th>Alta/Baja</th>
+                            <th>Foto</th>
+                            <th>Eliminar</th>
                         </tr>
                     </thead>
                     <tbody th:each="cliente : ${clientes}">
@@ -66,17 +79,10 @@
                             <td th:text="${cliente.nombre}"></td>
                             <td th:text="${cliente.apellido}"></td>
                             <td th:text="${cliente.mail}"></td>
+                            <td></td>
                             <td>
-                                <i th:if="${cliente.alta}" class="fa fa-circle text-success"></i>
-                                <i th:unless="${cliente.alta}" class="fa fa-circle" style="color:red;"></i>
-                            </td>
-                            <td><a th:href="@{/libro/modificarCliente/__${cliente.id}__}" <button type="button"
-                                    class="btn btn-light">Modificar</button></a></td>
-                            <td>
-                                <a th:if="${cliente.alta}" th:href="@{/libro/bajaLibro/__${libro.id}__}" <button
-                                    type="button" class="btn btn-outline-danger">Baja</button></a>
-                                <a th:unless="${cliente.alta}" th:href="@{/libro/altaLibro/__${libro.id}__}" <button
-                                    type="button" class="btn btn-outline-success">Alta</button></a>
+                                <a th:href="@{/cliente/eliminar/__${cliente.id}__}" <button type="button"
+                                    class="btn btn-outline-danger">Eliminar</button></a>
                             </td>
                         </tr>
                     </tbody>

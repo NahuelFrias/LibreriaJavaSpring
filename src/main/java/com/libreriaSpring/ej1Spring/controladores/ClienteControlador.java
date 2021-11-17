@@ -3,6 +3,9 @@ package com.libreriaSpring.ej1Spring.controladores;
 import com.libreriaSpring.ej1Spring.entidades.Cliente;
 import com.libreriaSpring.ej1Spring.errores.ErrorServicio;
 import com.libreriaSpring.ej1Spring.servicios.ClienteServicio;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
@@ -72,6 +75,27 @@ public class ClienteControlador {
             modelo.put("clave1", clave1);
             modelo.put("clave2", clave2);
             return "perfil.html";
+        }
+    }
+
+    @GetMapping("/listaClientes")
+    public String listaClientes(ModelMap modelo) {
+        List<Cliente> clientes = clienteServicio.listarClientes();
+        modelo.put("clientes", clientes);
+        return "listaClientes.html";
+    }
+
+    @GetMapping("/eliminar/{id}")
+    public String eliminar(ModelMap modelo, @PathVariable String id) {
+        try {
+            clienteServicio.Eliminar(id);
+            modelo.put("exito", "Cliente eliminado exitosamente.");
+            List<Cliente> clientes = clienteServicio.listarClientes();
+            modelo.put("clientes", clientes);
+            return "listaClientes";
+        } catch (ErrorServicio ex) {
+            modelo.put("error", ex.getMessage());
+            return "redirect:/cliente/listaClientes";
         }
     }
 }

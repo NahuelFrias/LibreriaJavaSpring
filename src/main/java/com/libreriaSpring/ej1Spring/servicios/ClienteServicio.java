@@ -39,7 +39,7 @@ public class ClienteServicio implements UserDetailsService { //toma el nombre de
         Cliente cliente = new Cliente();
         cliente.setNombre(nombre);
         cliente.setApellido(apellido);
-        
+
         cliente.setMail(mail);
         //encripto la clave
         String encriptada = new BCryptPasswordEncoder().encode(clave);
@@ -80,12 +80,12 @@ public class ClienteServicio implements UserDetailsService { //toma el nombre de
             throw new ErrorServicio("No se encontro el Cliente");
         }
     }
-    
-    public Cliente buscarPorId(String id) throws ErrorServicio{
-        
+
+    public Cliente buscarPorId(String id) throws ErrorServicio {
+
         Optional<Cliente> respuesta = clienteRepositorio.findById(id);
-        
-        if(respuesta.isPresent()){
+
+        if (respuesta.isPresent()) {
             Cliente cliente = respuesta.get();
             return cliente;
         } else {
@@ -104,14 +104,14 @@ public class ClienteServicio implements UserDetailsService { //toma el nombre de
         if (mail == null || mail.isEmpty()) {
             throw new ErrorServicio("El mail no puede ser nulo");
         }
-        if ( mail.isEmpty() || mail.contains("  ")) {
+        if (mail.isEmpty() || mail.contains("  ")) {
             throw new ErrorServicio("El mail no puede ser nulo");
         }
         /*
         if (clienteRepositorio.buscarPorMail(mail) != null) {
             throw new ErrorServicio("El Email ya esta en uso");
         }*/
-        if(!clave.equals(clave2)){
+        if (!clave.equals(clave2)) {
             throw new ErrorServicio("Las claves no coinciden.");
         }
     }
@@ -136,7 +136,6 @@ public class ClienteServicio implements UserDetailsService { //toma el nombre de
             ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
             HttpSession session = attr.getRequest().getSession(true);
             session.setAttribute("clientesession", cliente);
-             
 
             //transformo al cliente en un cliente del dominio de Spring
             //nos pide usuario,clave y permisos
@@ -144,6 +143,22 @@ public class ClienteServicio implements UserDetailsService { //toma el nombre de
             return user;
         } else {
             return null;
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public List<Cliente> listarClientes() {
+        return clienteRepositorio.findAll();
+    }
+
+    public void Eliminar(String id) throws ErrorServicio {
+
+        Optional<Cliente> respuesta = clienteRepositorio.findById(id);
+        if (respuesta.isPresent()) {
+            Cliente cliente = respuesta.get();
+            clienteRepositorio.delete(cliente);
+        } else {
+            throw new ErrorServicio("No se encontro el cliente.");
         }
     }
 }

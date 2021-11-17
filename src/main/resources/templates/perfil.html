@@ -37,12 +37,15 @@
 
     <section>
         <div class="container">
-           <!-- <div class="row align-items-center">
+            <div class="row align-items-center">
                 <div class="col-lg-6 order-lg-2">
-                    <div class="p-5">-->
-                      <img th:if="${session.clientesession.foto != null}" class="img-fluid rounded-circle" th:src="${'foto/fotoCliente/' + session.clientesession.id}" alt="">
-                    <!--</div>
-                  </div>-->
+                    <div class="p-5">
+                        <img th:if="${session.clientesession.foto != null}" class="img-fluid rounded-circle"
+                            th:src="${'foto/fotoCliente/' + session.clientesession.id}" alt="">
+                        <img th:if="${session.clientesession.foto == null}" class="img-fluid rounded-circle"
+                            src="/img/biblioteca.jpg" alt="">
+                    </div>
+                </div>
                 <div class="col-lg-6 order-lg-1">
                     <div class="p-5">
                         <h2 class="display-4">Edita tu perfil.</h2>
@@ -53,13 +56,16 @@
                             <input type="hidden" name="id" th:value="${session.clientesession.id}">
 
                             <label>Nombre</label>
-                            <input type="text" class="form-control" name="nombre" th:value="${session.clientesession.nombre}" />
+                            <input type="text" class="form-control" name="nombre"
+                                th:value="${session.clientesession.nombre}" />
 
                             <label>Apellido</label>
-                            <input type="text" class="form-control" name="apellido" th:value="${session.clientesession.apellido}" />
+                            <input type="text" class="form-control" name="apellido"
+                                th:value="${session.clientesession.apellido}" />
 
                             <label>E-Mail</label>
-                            <input type="email" class="form-control" name="mail" th:value="${session.clientesession.mail}" />
+                            <input type="email" class="form-control" name="mail"
+                                th:value="${session.clientesession.mail}" />
 
                             <label>Foto</label>
                             <input type="file" class="form-control" name="archivo" />
