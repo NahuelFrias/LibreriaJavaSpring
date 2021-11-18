@@ -67,6 +67,7 @@ public class PortalControlador {
             clienteServicio.registrar(archivo, nombre, apellido, mail, clave1, clave2);
             modelo.put("titulo", "Bienvenido a la Libreria!");
             modelo.put("descripcion", "El cliente fue registrado con exito!");
+            modelo.put("registrar", "registrar");
             return "inicio.html";
         } catch (ErrorServicio ex) {
             modelo.put("error", ex.getMessage());
@@ -89,4 +90,8 @@ public class PortalControlador {
         return "listas.html";
     }
 
+    @GetMapping("/prestamos")
+    public String prestamos() {
+        return "prestamos.html";
+    }
 }

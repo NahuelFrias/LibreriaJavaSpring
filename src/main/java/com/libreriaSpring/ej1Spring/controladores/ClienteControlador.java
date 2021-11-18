@@ -20,13 +20,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
+@PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
 @RequestMapping("/cliente")
 public class ClienteControlador {
 
     @Autowired
     private ClienteServicio clienteServicio;
 
-    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @GetMapping("/editar-perfil/{id}")
     public String editarPerfil(HttpSession session, @PathVariable String id, ModelMap modelo) throws ErrorServicio {
 
@@ -46,7 +46,6 @@ public class ClienteControlador {
         return "perfil.html";
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @PostMapping("/actualizar-perfil")
     public String registrar(ModelMap modelo,
             HttpSession session,

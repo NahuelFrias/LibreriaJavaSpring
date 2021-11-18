@@ -10,6 +10,7 @@ import com.libreriaSpring.ej1Spring.servicios.LibroServicio;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author leonahuel
  */
 @Controller
+@PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
 @RequestMapping("/libro")
 public class LibroControlador {
 
@@ -35,6 +37,7 @@ public class LibroControlador {
     @Autowired
     private EditorialServicio editorialServicio;
 
+    
     @GetMapping("/cargarLibro")
     public String cargarLibro(ModelMap modelo) {
         //listo los autores y los paso  las vistas para el select de autores

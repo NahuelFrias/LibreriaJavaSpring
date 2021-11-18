@@ -37,8 +37,7 @@ Utilizo los tags de thymeleaf
                                                 <li class="nav-item">
                                                         <a class="nav-link active" th:href="@{/prestamos}">Prestamos</a>
                                                 </li>
-                                                <li class="nav-item">
-                                                        <a class="nav-link" th:href="@{/logout}">Logout</a>
+                                                <a class="nav-link" th:href="@{/logout}">Logout</a>
                                                 </li>
                                         </ul>
                                 </div>
@@ -59,8 +58,10 @@ Utilizo los tags de thymeleaf
                         <h3 th:if="${session.clientesession != null}"
                                 th:text="${'Cliente: ' + session.clientesession.nombre + ' ' +session.clientesession.apellido}">
                         </h3>
-                      <a th:if="${session.clientesession != null}" th:href="@{/cliente/editar-perfil/__${session.clientesession.id}__}"
+                        <a th:if="${session.clientesession != null}"
+                                th:href="@{/cliente/editar-perfil/__${session.clientesession.id}__}"
                                 class="btn btn-light">Configura tu perfil!</a>
+                        <a th:if="${registrar != null}" th:href="@{/login}" class="btn btn-light">Logueate!</a>
 
                 </blockquote>
         </figure>
