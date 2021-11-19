@@ -80,16 +80,19 @@ public class PortalControlador {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @GetMapping("/cargas")
     public String cargas() {
         return "cargas.html";
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @GetMapping("/listas")
     public String listas() {
         return "listas.html";
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_USUARIO_REGISTRADO')")
     @GetMapping("/prestamos")
     public String prestamos() {
         return "prestamos.html";

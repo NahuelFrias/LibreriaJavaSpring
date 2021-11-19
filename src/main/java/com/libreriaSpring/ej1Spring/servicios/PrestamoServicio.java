@@ -74,6 +74,7 @@ public class PrestamoServicio {
         }
     }
 
+    @Transactional(readOnly = true)
     public Prestamo buscarPorId(String id) throws ErrorServicio {
 
         Optional<Prestamo> respuesta = prestamoRepositorio.findById(id);
@@ -86,7 +87,7 @@ public class PrestamoServicio {
     }
     
     @Transactional(readOnly = true)
-    public List<Prestamo> listarPrestamos() {
-        return prestamoRepositorio.findAll();
+    public List<Prestamo> listarPrestamosPorCliente(String id) {
+        return prestamoRepositorio.listarPrestamosPorCliente(id);
     }
 }

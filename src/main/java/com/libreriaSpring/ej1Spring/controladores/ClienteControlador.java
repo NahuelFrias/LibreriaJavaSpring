@@ -4,14 +4,13 @@ import com.libreriaSpring.ej1Spring.entidades.Cliente;
 import com.libreriaSpring.ej1Spring.errores.ErrorServicio;
 import com.libreriaSpring.ej1Spring.servicios.ClienteServicio;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +33,7 @@ public class ClienteControlador {
         //y editar su perfil
         Cliente login = (Cliente) session.getAttribute("clientesession");
         if (login == null || !login.getId().equals(id)) {
-            return "redirect:/inicio";
+            return "redirect:/login";
         }
 
         try {
@@ -59,7 +58,7 @@ public class ClienteControlador {
         try {
             Cliente login = (Cliente) session.getAttribute("clientesession");
             if (login == null || !login.getId().equals(id)) {
-                return "redirect:/inicio";
+                return "redirect:/login";
             }
             Cliente cliente = clienteServicio.buscarPorId(id);
             clienteServicio.modificar(archivo, id, nombre, apellido, mail, clave1, clave2);
@@ -85,13 +84,13 @@ public class ClienteControlador {
     }
 
     @GetMapping("/eliminar/{id}")
-    public String eliminar(ModelMap modelo, @PathVariable String id) {
+    public String eliminar(ModelMap modelo, @PathVariable String id ) {
         try {
-            clienteServicio.Eliminar(id);
+            clienteServicio.eliminar(id);
             modelo.put("exito", "Cliente eliminado exitosamente.");
             List<Cliente> clientes = clienteServicio.listarClientes();
             modelo.put("clientes", clientes);
-            return "listaClientes";
+            return "redirect:/login?logout";
         } catch (ErrorServicio ex) {
             modelo.put("error", ex.getMessage());
             return "redirect:/cliente/listaClientes";

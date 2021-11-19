@@ -8,10 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
         integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
-        integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous" />
-
-    <title>Lista de Clientes</title>
+    <title>Renovar Prestamo</title>
 </head>
 
 <body>
@@ -61,44 +58,32 @@
         </div>
     </div>
 
-    <figure class="text-center">
-        <blockquote class="blockquote">
-            <div class="d-flex justify-content-center">
-                <table id="tabla" class="table table-hover">
-                    <thead class="table-secondary">
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Apellido</th>
-                            <th>E-Mail</th>
-                            <th>Foto</th>
-                            <th>Eliminar</th>
-                        </tr>
-                    </thead>
-                    <tbody th:each="cliente : ${clientes}">
-                        <tr>
-                            <td th:text="${cliente.nombre}"></td>
-                            <td th:text="${cliente.apellido}"></td>
-                            <td th:text="${cliente.mail}"></td>
-                            <td>
-                                <img th:if="${session.clientesession.foto != null}" 
-                                    th:src="@{'foto/fotoCliente/' + session.clientesession.id}" alt="" style="max-height: 50px; border-radius: 100%">
-                                <img th:if="${session.clientesession.foto == null}" 
-                                    th:src="@{/img/biblioteca.jpg}" alt="" style="max-height: 50px; border-radius: 100%">
-                            </td>
-                            <td>
-                                <a th:if="${session.clientesession.id == cliente.id}"
-                                    th:href="@{/cliente/eliminar/__${session.clientesession.id}__}" <button type="button"
-                                    class="btn btn-outline-danger" >Eliminar</button></a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </blockquote>
-    </figure>
+    <h3 th:if="${session.clientesession != null}"
+        th:text="${'Cliente: ' + session.clientesession.nombre + ' ' +session.clientesession.apellido}">
+    </h3>
 
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <a th:href="@{/listas}" <button class="btn btn-outline-primary me-md-2" type="button">Volver</button></a>
+    <div>
+        <div class="mb-3">
+            <form th:action="@{/prestamos/modificarPrestamo/__${prestamo.id}__}" method="post">
+                <input hidden th:value="${id}" name="id">
+
+                <label for="formGroupExampleInput" class="form-label">Libro</label><br>
+                <input type="text" class="form-control" name="titulo" th:value="${prestamo.libro.titulo}" th:text="${prestamo.libro.titulo}" readonly>
+        </div>
+        <div class="mb-3">
+            <label for="formGroupExampleInput" class="form-label">Fecha de prestamo</label>
+            <input type="text" class="form-control" name="prestamo" th:value="${prestamo.fechaPrestamo}" th:text="${prestamo.fechaPrestamo}" readonly>
+    </div>
+        <div class="mb-3">
+            <label for="formGroupExampleInput" class="form-label">Fecha de devolucion</label><br>
+            <input type="date" name="devolucion" th:value="${prestamo.fechaDevolucion}">
+            <p class="text-muted"><label for="floatingSelect">*Selecciona la fecha de devolucion</label></p>
+        </div>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button class="btn btn-outline-primary me-md-2" type="submit">Cargar</button>
+            <a th:href="@{/cargas}" <button class="btn btn-outline-primary me-md-2" type="button">Volver</button></a>
+            </form>
+        </div>
     </div>
 
     <div class="container">
@@ -119,6 +104,7 @@
             </ul>
         </footer>
     </div>
+
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">

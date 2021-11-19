@@ -151,7 +151,7 @@ public class ClienteServicio implements UserDetailsService { //toma el nombre de
         return clienteRepositorio.findAll();
     }
 
-    public void Eliminar(String id) throws ErrorServicio {
+    public void eliminar(String id) throws ErrorServicio {
 
         Optional<Cliente> respuesta = clienteRepositorio.findById(id);
         if (respuesta.isPresent()) {
