@@ -27,15 +27,24 @@ public class PrestamoServicio {
 
         Cliente cliente = clienteServicio.buscarPorId(idCliente);
         Libro libro = libroServicio.buscarPorId(idLibro);
+        int cantidad = libro.getEjemplares();
+        int prestados = libro.getEjemplaresPrestados();
+        if (cantidad > 0) {
 
-        Prestamo prestamo = new Prestamo();
-        prestamo.setCliente(cliente);
-        prestamo.setLibro(libro);
-        prestamo.setAlta(true);
-        prestamo.setFechaPrestamo(new Date());
-        prestamo.setFechaDevolucion(devolucion);
+            libro.setEjemplares(cantidad -1);
+            libro.setEjemplaresPrestados(prestados +1);
+            
+            Prestamo prestamo = new Prestamo();
+            prestamo.setCliente(cliente);
+            prestamo.setLibro(libro);
+            prestamo.setAlta(true);
+            prestamo.setFechaPrestamo(new Date());
+            prestamo.setFechaDevolucion(devolucion);
 
-        prestamoRepositorio.save(prestamo);
+            prestamoRepositorio.save(prestamo);
+        } else {
+            throw new ErrorServicio("No hay libros disponibles.");
+        }
 
     }
 
@@ -85,7 +94,7 @@ public class PrestamoServicio {
             throw new ErrorServicio("No se encontro el prestamo solicitado.");
         }
     }
-    
+
     @Transactional(readOnly = true)
     public List<Prestamo> listarPrestamosPorCliente(String id) {
         return prestamoRepositorio.listarPrestamosPorCliente(id);

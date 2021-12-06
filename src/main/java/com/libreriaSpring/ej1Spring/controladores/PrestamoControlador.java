@@ -60,7 +60,7 @@ public class PrestamoControlador {
         } catch (ErrorServicio ex) {
             List<Libro> libros = libroServicio.listarLibros();
             modelo.put("libros", libros);
-            modelo.put("error", "Falto algun dato.");
+            modelo.put("error", ex.getMessage());
             return "cargarPrestamo.html";
         }
     }
